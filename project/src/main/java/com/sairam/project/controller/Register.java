@@ -81,6 +81,21 @@ public RegisterRepo Rp;
 		System.out.println("delete");
 		RegisterModal Rr=Rp.findByIdre(id);
 		Rp.delete(Rr);
+		System.out.println("this is controller "+Rm.getFirstName()+"  "+Rm.getLastName());
 		return ResponseEntity.ok().build();
+	}
+	
+	
+
+	@RequestMapping("reg/{n}/{s}/{m}/{d}")
+	public ResponseEntity<Void> d() throws URISyntaxException{
+
+		System.out.println("this is controller "+Rm.getFirstName()+"  "+Rm.getLastName());
+
+		Rp.save(Rm);
+		getall();
+	return ResponseEntity.created(
+			new URI("/api/reggg/" + Rm.getId())).build();
+		
 	}
 }
