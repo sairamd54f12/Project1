@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="requisition_control_registerReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bba45b15-65dd-4865-b205-84483c0a14c7">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="63"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="testbed" class="java.lang.String"/>
+	<parameter name="project" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    *
+FROM
+    requisition_control_register rcr,
+    requisition r,
+    motor_details md,
+    test_bed_master tb,
+    project_master pm
+WHERE
+    rcr.requisition_id = r.id
+        AND rcr.motor_details_id = md.id
+        AND r.test_bed_master_id = tb.id
+        AND rcr.project_master_id = pm.id
+        AND r.year =(case when $P{year}="0" then r.year else $P{year} end)
+        AND MONTH(r.requisition_date) = (case when $P{month}="0" then MONTH(r.requisition_date) else $P{month} end)
+        AND r.test_bed_master_id =(case when $P{testbed} ="0" then r.test_bed_master_id else $P{testbed} end)
+        AND rcr.project_master_id = (case when $P{project}="0" then rcr.project_master_id else $P{project} end);]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_master_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motor_details_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_details_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_tests_planned" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_test_batches" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_master_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarb_details" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="division_reference_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarb_status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="year" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tfrb_details" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_location" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motor_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_nozzles" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="throat_dia" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_batch_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="throat_dia_uom_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="throat_diameter" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="incharge_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="43" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="14" width="18" height="20" uuid="c89a5268-a932-4176-8cf0-035a8080fed4"/>
+				<text><![CDATA[Sl.No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="13" width="67" height="20" uuid="e8a324fc-9617-479e-9a4d-8496edba9b8a"/>
+				<text><![CDATA[RequisitionNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="13" width="82" height="20" uuid="e2509077-67a2-4287-adc9-74999e97f3a1"/>
+				<text><![CDATA[RequisitionDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="13" width="53" height="20" uuid="a3e64f7a-4da0-45be-867c-46949b854d2c"/>
+				<text><![CDATA[project]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="13" width="69" height="20" uuid="61a062bb-2b3a-4157-a728-126db65fb668"/>
+				<text><![CDATA[TestName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="13" width="66" height="20" uuid="cd276e6b-dc55-4726-af1a-fd13ffb1feac"/>
+				<text><![CDATA[TestNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="13" width="66" height="20" uuid="90a6628d-2f21-4464-97fb-4a6877e88636"/>
+				<text><![CDATA[TestDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="13" width="72" height="20" uuid="056701fe-05ff-41f4-b787-f45187396bfa"/>
+				<text><![CDATA[TestBed                     ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="13" width="59" height="20" uuid="d6845555-96a8-4ba4-9717-6bc0073d9ed0"/>
+				<text><![CDATA[MotorName]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="85" y="-1" width="82" height="35" uuid="dc606052-7125-460b-8a46-cf2a0d533e8b"/>
+				<textFieldExpression><![CDATA[$F{requisition_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="-1" width="69" height="35" uuid="e9895573-477c-4674-9a96-a72e6aecd3d3"/>
+				<textFieldExpression><![CDATA[$F{test_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="-1" width="66" height="35" uuid="19009573-7949-4fe3-8a74-d6e65db404a1"/>
+				<textFieldExpression><![CDATA[$F{test_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="-1" width="66" height="35" uuid="d27aa7c6-e54a-47b6-be85-cea79444dd3c"/>
+				<textFieldExpression><![CDATA[$F{test_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="-1" width="71" height="35" uuid="d7cb8b5c-2fcf-41aa-abc1-88006b9f0194"/>
+				<textFieldExpression><![CDATA[$F{test_bed_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="492" y="-1" width="60" height="35" uuid="2f2c21fe-ca8b-4f07-adbc-8295cdb542d0"/>
+				<textFieldExpression><![CDATA[$F{motor_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="18" y="-1" width="67" height="35" uuid="e99e5e82-003a-4ca4-8fb7-50fa0c5534ee"/>
+				<textFieldExpression><![CDATA[$F{requisition_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="167" y="0" width="53" height="34" uuid="c289749d-5d13-4954-8802-0dc9401d3450"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

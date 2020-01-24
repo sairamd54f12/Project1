@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NewRequisition_Controller_Officer" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d323a709-e47c-48a2-ba4d-84d77508f8c8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="testbatchId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select uttd.team_member_name,uttd.role_name,uttd.mobile_no,uttd.phone_no,dv.division,dm.name,(select requisition_id from test_batch tb where tb.id = test_batch_id)requisitionid, tbm.phone_no telephoneNo,tbm.incharge_name from  user_trial_team_details uttd inner join division_master dv on
+dv.id = uttd.division_master_id inner join designation_master dm on dm.id = uttd.designation_master_id
+inner join test_batch tb on tb.id = uttd.test_batch_id inner join requisition req on req.id = tb.requisition_id inner join test_bed_master tbm on
+tbm.id = req.test_bed_master_id and  uttd.role_name='Controller' and test_batch_id = $P{testbatchId}]]>
+	</queryString>
+	<field name="team_member_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="role_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mobile_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="division" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisitionid" class="java.lang.Long"/>
+	<field name="telephoneNo" class="java.lang.Integer"/>
+	<field name="incharge_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="105" splitType="Stretch">
+			<staticText>
+				<reportElement x="306" y="43" width="57" height="18" uuid="8981ff4d-98d5-4b4c-b831-609b70d71493"/>
+				<text><![CDATA[Ph.no.               ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="61" width="57" height="15" uuid="e35c008c-c175-48ec-b396-ed825a54f084"/>
+				<text><![CDATA[Mobile No.        ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="25" width="100" height="18" uuid="d9b1b779-23e7-4196-a579-19d92d25ae0c"/>
+				<text><![CDATA[(Controlling Officer)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-268" y="88" width="207" height="17" uuid="cad9886e-401a-4f36-8a87-5b70132d7295"/>
+				<text><![CDATA[Tel.No:3608/3645/3897]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-268" y="71" width="207" height="17" uuid="86884500-332b-4f8c-a7c7-6129a10f3032"/>
+				<text><![CDATA[Attn:P.subrahmanyam/Test I/C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-268" y="39" width="47" height="15" uuid="0004ac74-6b62-48c0-9a01-69cd7d6bc727"/>
+				<text><![CDATA[TO,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-268" y="54" width="61" height="18" uuid="e2ac7627-4cba-45a9-b9f4-5b3cd2b720f0"/>
+				<text><![CDATA[HEAD, GID.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="0" width="65" height="17" uuid="3e95c369-7417-4570-9690-8459e2d63a67"/>
+				<text><![CDATA[To,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="17" width="137" height="18" uuid="6c3fa751-eede-4990-9287-23b6ee7f5451"/>
+				<text><![CDATA[Technology Director, DOI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="47" width="139" height="17" uuid="89bf27b4-1163-473d-a87b-23ff1108df5d"/>
+				<text><![CDATA[Tel.No: ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="306" y="9" width="142" height="20" uuid="12a34389-253c-4376-b2a9-a4ba43401dce"/>
+				<textFieldExpression><![CDATA[$F{team_member_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="410" y="45" width="100" height="18" uuid="48827948-49b1-4c3b-a998-3ead479e54a6"/>
+				<textFieldExpression><![CDATA[$F{phone_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="410" y="63" width="100" height="18" uuid="5d884344-53e3-4c15-ad85-2e1b73f74b2a"/>
+				<textFieldExpression><![CDATA[$F{mobile_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="61" width="9" height="18" uuid="e4652b42-2d04-4d9b-8dc7-3d3b0bcd757b"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="43" width="9" height="18" uuid="0068f39b-60ab-460f-b240-a8f1b31b3001"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="44" y="47" width="103" height="17" uuid="3ebb51ac-6b25-40b9-9f99-5515a3a731ac"/>
+				<textFieldExpression><![CDATA[$F{telephoneNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="31" y="31" width="211" height="20" uuid="d33d9086-3932-40a1-9f49-5cd4bf550524"/>
+				<textFieldExpression><![CDATA[$F{incharge_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="31" width="23" height="18" uuid="e7637fe4-0f05-4491-aca1-533472a1cc92"/>
+				<text><![CDATA[Attn:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<noData>
+		<band height="97">
+			<staticText>
+				<reportElement x="8" y="17" width="139" height="18" uuid="766c6112-8afa-436b-b041-55a678c20837"/>
+				<text><![CDATA[Technology Director , DOI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="54" width="100" height="15" uuid="c662dab7-29a8-439c-ab39-5d5809b9d1ea"/>
+				<text><![CDATA[Mobile No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="18" width="100" height="18" uuid="b7f8f672-0471-4d88-b2f9-538c2675cc3a"/>
+				<text><![CDATA[(Controlling Officer)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="48" width="158" height="17" uuid="71ea6fd1-5898-4e05-8630-b5d782cdf402"/>
+				<text><![CDATA[Tel.No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="0" width="65" height="17" uuid="13a00baa-c15d-40c4-bcc1-0b5739f20b12"/>
+				<text><![CDATA[To,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="36" width="100" height="18" uuid="039d5bdb-a049-4d6b-98d7-503647aa9d3e"/>
+				<text><![CDATA[Ph.no.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="31" y="31" width="211" height="20" uuid="cf60bdb3-2f91-47e6-9917-c3dad63b4009"/>
+				<textFieldExpression><![CDATA[$F{incharge_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="43" y="48" width="103" height="17" uuid="5bd63aaa-e2f3-4c93-b42c-8d8856738926"/>
+				<textFieldExpression><![CDATA[$F{telephoneNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="31" width="23" height="18" uuid="5ad34353-8c70-4de4-af0e-43b3a057617b"/>
+				<text><![CDATA[Attn:]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

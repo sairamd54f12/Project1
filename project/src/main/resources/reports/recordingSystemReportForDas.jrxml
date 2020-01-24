@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recordingSystemReportForDas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bec702a7-b8b3-4895-8257-ddccedc87079">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="120"/>
+	<parameter name="requisitionId" class="java.lang.String"/>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<parameter name="instrumentationId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SubReportPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select req.id requisitionId,tb.id testBatchId,tb.requisition_id,tm.test_bed_name,req.requisition_no,tb.test_nomenclature,pm.project_name,
+req.requisition_date,tb.proposed_date_time,imp.measurement_plan_no,imp.no_of_systems_used,tb.is_ambient,
+case when concat(truncate(tb.non_ambient_temperature,0),' ',(select value from uom where id=tb.non_ambient_temperature_uom_id)) is null then "Not Provided" else concat(truncate(tb.non_ambient_temperature,0),' ',(select value from uom where id=tb.non_ambient_temperature_uom_id)) end as non_ambient_temperature
+,
+tm.incharge_name,tm.designation,utm.team_member_name,dm.description,utm.role_name
+from requisition req,test_batch tb,project_master pm,instrumentation_measurement_plan imp,test_bed_master tm,user_trial_team_details utm,
+designation_master dm
+where req.id = tb.requisition_id and pm.id = req.project_master_id and req.id = $P{requisitionId}  and req.test_bed_master_id = tm.id and utm.test_batch_id= $P{testBatchId} and
+imp.id = (select id from instrumentation_measurement_plan where test_batch_id = $P{testBatchId} and requisition_id= $P{requisitionId}) and tb.id = $P{testBatchId}
+and dm.id = utm.designation_master_id and utm.role_name = 'Controller']]>
+	</queryString>
+	<field name="requisitionId" class="java.lang.Long"/>
+	<field name="testBatchId" class="java.lang.Long"/>
+	<field name="requisition_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_nomenclature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proposed_date_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="measurement_plan_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_systems_used" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="is_ambient" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="non_ambient_temperature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="incharge_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="team_member_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="role_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="266" splitType="Stretch">
+			<staticText>
+				<reportElement x="369" y="25" width="126" height="15" uuid="719a330d-b131-4cc7-830c-5f750664c3d5"/>
+				<text><![CDATA[REV.NO: 00 DT 29/02/2012]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="426" y="42" width="29" height="20" uuid="a92ce138-600d-4e4a-841f-d9fbb2417192"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="133" width="107" height="21" uuid="a7b76f99-c160-412e-95fa-ee26de314433"/>
+				<text><![CDATA[REQUISITION DATE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="133" width="128" height="20" uuid="0ae134d3-a09d-413f-b0b3-d9a6f7097315"/>
+				<text><![CDATA[REQUISITION SL.NO:	]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="426" y="183" width="114" height="19" uuid="2541caae-4bb5-485d-a998-f84b2de1924d"/>
+				<textFieldExpression><![CDATA[$F{test_bed_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="158" width="107" height="20" uuid="afa9401d-b9f7-4153-a89c-f47ac3d3f246"/>
+				<text><![CDATA[TEST NAME:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="168" y="186" width="110" height="16" uuid="44ce5e63-f16f-43d3-9870-74ff6ace17e4"/>
+				<textFieldExpression><![CDATA[$F{proposed_date_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="426" y="133" width="114" height="20" uuid="6f2eb519-71c8-4685-aeb6-b76c1632c255"/>
+				<textFieldExpression><![CDATA[$F{requisition_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="158" width="128" height="19" uuid="bbfcb22b-11f3-4032-991c-c29f53997ea7"/>
+				<text><![CDATA[PROJECT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="211" width="129" height="21" uuid="6a7405f9-a465-4a51-8406-0cfb92758575"/>
+				<text><![CDATA[TEST CONDITION:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="179" y="94" width="132" height="21" uuid="df917276-3f67-43f3-a89b-1d3243907eea"/>
+				<textFieldExpression><![CDATA[$F{measurement_plan_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="369" y="7" width="126" height="18" uuid="e69dd492-d5c0-4b88-9e52-0761f52e4318"/>
+				<text><![CDATA[FORMAT NO:   DOI/F-04]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="186" width="129" height="16" uuid="f6b20e62-dc4b-4cea-b753-828156a00df9"/>
+				<text><![CDATA[PROPOSED TEST DATE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="94" width="142" height="21" uuid="d100768e-f34c-44f7-b403-2c63d51a9f10"/>
+				<text><![CDATA[MEASUREMENT PLAN NO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="168" y="133" width="110" height="20" uuid="0648fc42-62a7-42c8-af31-072fee995472"/>
+				<textFieldExpression><![CDATA[$F{requisition_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="158" width="110" height="19" uuid="e8e17862-acc2-4ae5-a990-81152fd0730b"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="369" y="42" width="126" height="20" uuid="2a7fc67d-4933-4034-a98f-0da1c3e760f1"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="211" width="110" height="21" uuid="e8b20948-6777-4937-99a2-cd6b71df2554"/>
+				<textFieldExpression><![CDATA[$F{is_ambient}==true?"Conditioned("+$F{non_ambient_temperature}+")":"Ambient"+"("+$F{non_ambient_temperature}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="426" y="158" width="114" height="19" uuid="c8f0ec48-b575-4aff-8dc2-bf43b0aa661e"/>
+				<textFieldExpression><![CDATA[$F{test_nomenclature}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="240" width="110" height="18" uuid="1bad0062-3ce9-4941-a901-5af3d9a106fd"/>
+				<textFieldExpression><![CDATA[$F{no_of_systems_used}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="183" width="107" height="20" uuid="abf21ffb-935f-4e78-b047-a1049ddb3efe"/>
+				<text><![CDATA[TEST BED:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="240" width="129" height="18" uuid="bae951a4-34e5-4d04-a092-cd51fd269f58"/>
+				<text><![CDATA[NO OF DAS USED:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="69" width="556" height="20" uuid="d30c2888-ca1b-4428-810b-3da89e2a3e53"/>
+				<textElement textAlignment="Center">
+					<font size="14" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[INSTRUMENTATION MEASUREMENT PLAN FOR STATIC TEST]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="556" height="25" uuid="0dcf5fd2-a136-4c6d-a135-089d0c3afa1b"/>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="instrumentationId">
+					<subreportParameterExpression><![CDATA[$P{instrumentationId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "recordingSystemReportForDas_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="22" y="68" width="87" height="20" uuid="bbd3db70-ea64-45a4-911f-86e9404c5e29"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[DESIGNATION:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="68" width="84" height="20" uuid="7ec8bd27-8c29-4245-a28a-56f07caddce3"/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="15" width="87" height="20" uuid="a4e7d717-6048-47ab-9a42-9d10cbb406bc"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[USER'S SIGNATURE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="68" width="119" height="20" uuid="24fd3348-11e3-44cd-88b4-d97bad6c27eb"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[DESIGNATION:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="437" y="68" width="100" height="20" uuid="76fccab8-be14-4e08-96a5-3119221c5f69"/>
+				<textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="41" width="84" height="20" uuid="05d16d45-15b2-4771-b2c8-6f11ced627ef"/>
+				<textFieldExpression><![CDATA[$F{team_member_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="41" width="86" height="20" uuid="b78f30dc-6132-468d-a195-0526c0badf96"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[NAME: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="437" y="41" width="100" height="20" uuid="adb1cd8f-2dcb-4801-bf34-206cba655cf7"/>
+				<textFieldExpression><![CDATA[$F{incharge_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="15" width="119" height="20" uuid="73bcc79a-fca5-4145-a4d4-ee2cc3b1d857"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[SIGNATURE OF DOI REP:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="41" width="119" height="20" uuid="d47f039c-3009-4979-ac7c-8819a36d75fa"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[NAME:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

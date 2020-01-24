@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="checkList_recording_systems" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bad5f924-a0c8-4bc9-b92a-9e7fda00b90e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<parameter name="requisitionId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select tdr.id,parameter_name,cable_no,im.name,
+bm.bandwidth_steps,gm.gain_steps from
+test_details_readings tdr,ia_no_master im,bandwidth_master bm,gain_master gm
+where im.id = tdr.ia_no_master_id and bm.id = tdr.bandwidth_master_id and gm.id = tdr.gain_master_id
+and test_details_id =(select id from test_details where instrumentation_measurement_plan_id =
+(select id from instrumentation_measurement_plan where test_batch_id = $P{testBatchId} and requisition_id = $P{requisitionId}))]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parameter_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cable_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bandwidth_steps" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gain_steps" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="226" height="78" uuid="39e2551b-b9c0-4391-9606-8143e8e9e563"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="25" width="226" height="1" uuid="4d453287-883f-48b7-8cab-df2df7953e18"/>
+			</line>
+			<line>
+				<reportElement x="0" y="48" width="226" height="1" uuid="4a890bae-30e2-4061-a7b1-ea61668d9b3b"/>
+			</line>
+			<line>
+				<reportElement x="35" y="25" width="1" height="53" uuid="2e10dde6-d630-4e03-9204-d23240c845ca"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="28" width="35" height="20" uuid="149ed36d-0ad8-4a27-b25b-771214712d86"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IA.NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="28" width="37" height="20" uuid="adab5801-c52f-4fdb-ae01-85cfddc33707"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BW(Hz)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="73" y="26" width="1" height="53" uuid="9235224b-d3a2-4df2-9de9-ba6f8dcf3541"/>
+			</line>
+			<line>
+				<reportElement x="114" y="0" width="1" height="78" uuid="16395d1f-19f9-429b-99ad-cc5cd1f3a2e6"/>
+			</line>
+			<staticText>
+				<reportElement x="74" y="28" width="38" height="20" uuid="7dbff85e-5a36-4b8c-9e6c-f8919541a739"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GAIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="2" width="112" height="20" uuid="7c9c159e-0390-40dd-a810-95eb2d6352d7"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IA DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="2" width="111" height="22" uuid="01500a70-2e6f-4c3c-9c2a-abf047e0aba2"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECORING SYSTEMS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="26" width="53" height="22" uuid="877fd77c-4f59-491e-839b-10bcbb9370f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DAS-1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="28" width="57" height="20" uuid="184a2922-a42e-4cba-9c89-9fa47f60614f"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DAS-2]]></text>
+			</staticText>
+			<line>
+				<reportElement x="168" y="25" width="1" height="53" uuid="73e2c465-bf17-4548-aee6-6f9266d3155e"/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="226" height="26" uuid="5baa4f91-83f8-46f1-a98d-35f202cb22f7"/>
+			</rectangle>
+			<line>
+				<reportElement x="35" y="0" width="1" height="26" uuid="3c0288f7-00af-420e-881b-694df663b046"/>
+			</line>
+			<line>
+				<reportElement x="168" y="-1" width="1" height="27" uuid="00d62741-c1da-4750-b4bd-25c27c1c1331"/>
+			</line>
+			<line>
+				<reportElement x="114" y="0" width="1" height="26" uuid="318a80ac-27f7-4209-aa9e-609a7d573901"/>
+			</line>
+			<line>
+				<reportElement x="73" y="0" width="1" height="26" uuid="66957e2d-4aef-4e30-9820-617b55fb6b14"/>
+			</line>
+			<textField>
+				<reportElement x="2" y="0" width="33" height="26" uuid="0d932150-7fae-4e06-99e2-d3e72b596801"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="36" y="0" width="37" height="26" uuid="f49b8055-4d5f-405e-a5cb-512ecd2cc7e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{bandwidth_steps}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="74" y="0" width="38" height="26" uuid="701f7ce8-4aed-413c-911c-8c9c3dae44e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{gain_steps}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

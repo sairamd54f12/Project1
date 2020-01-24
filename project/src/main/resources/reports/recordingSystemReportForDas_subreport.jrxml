@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recordingSystemReportForDas_subreport" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bc934710-199d-4a63-890c-8cdc35a8426f">
+	<property name="ireport.zoom" value="1.6105100000000039"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="4afd10fb-f4fc-41c9-9207-8f1a26c8aeed"/>
+	<parameter name="instrumentationId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT parameter_name,provided,requirement,
+       Group_concat(das1 SEPARATOR '') das1,
+       Group_concat(das2 SEPARATOR '') das2,
+       Group_concat(das3 SEPARATOR '') das3
+FROM   (SELECT a.parameter_name,a.provided,a.requirement,
+               a.das1,
+               a.das2,
+               a.das3,
+               Count(*) AS rank
+        FROM   recording_das_system_view a
+               JOIN recording_das_system_view b
+                 ON ( b.das1 ) >= ( a.das1 )
+                    AND a.parameter_name = b.parameter_name
+                    AND a.das1 != ''
+                    AND a.instrumentation_measurement_plan_id =$P{instrumentationId}
+                    AND b.instrumentation_measurement_plan_id = $P{instrumentationId}
+        GROUP  BY parameter_name,
+                  das1,
+                  das2,
+                  das3
+        UNION
+        SELECT a.parameter_name,a.provided,a.requirement,
+               a.das1,
+               a.das2,
+               a.das3,
+               Count(*) AS rank
+        FROM   recording_das_system_view a
+               JOIN recording_das_system_view b
+                 ON ( b.das2 ) >= ( a.das2 )
+                    AND a.parameter_name = b.parameter_name
+                    AND a.das2 != ''
+                    AND a.instrumentation_measurement_plan_id = $P{instrumentationId}
+                    AND b.instrumentation_measurement_plan_id = $P{instrumentationId}
+        GROUP  BY parameter_name,
+                  das1,
+                  das2,
+                  das3
+        UNION
+        SELECT a.parameter_name,a.provided,a.requirement,
+               a.das1,
+               a.das2,
+               a.das3,
+               Count(*) AS rank
+        FROM   recording_das_system_view a
+               JOIN recording_das_system_view b
+                 ON ( b.das3 ) >= ( a.das3 )
+                    AND a.parameter_name = b.parameter_name
+                    AND a.das3 != ''
+                    AND a.instrumentation_measurement_plan_id = $P{instrumentationId}
+                    AND b.instrumentation_measurement_plan_id =  $P{instrumentationId}
+        GROUP  BY parameter_name,
+                  das1,
+                  das2,
+                  das3) recording_das_system_view
+GROUP  BY parameter_name,
+          rank]]>
+	</queryString>
+	<field name="parameter_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="provided" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requirement" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="das1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="das2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="das3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="56">
+			<staticText>
+				<reportElement x="10" y="0" width="69" height="56" uuid="bece8c4c-3132-4ca5-9cb6-d266803e1790"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Parameter Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="0" width="40" height="56" uuid="9a8498f0-ec92-4378-a6bc-0a5eed52a0fd"/>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Provided]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="131" y="0" width="49" height="56" uuid="9ddb6846-6c35-4baf-bde6-44b1e8a83eb8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Requirement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="0" width="520" height="20" uuid="325de119-0671-464b-916d-8148b76e65b0"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[          Recording System]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="38" width="95" height="18" uuid="9b947d74-f419-4d2f-8f4d-136208acc5f9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CH       SR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="38" width="100" height="18" uuid="de955bd5-7f4d-4dc8-9da5-f84acae5613c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CH       SR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="19" width="85" height="19" uuid="55931317-e617-4f12-b970-739dc584506d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DAS 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="19" width="95" height="19" uuid="be53949c-edb8-4100-a8cb-4f836efe16c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DAS 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="19" width="100" height="19" uuid="87d75b35-a7e5-4613-ae07-d896920d127f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DAS 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="38" width="85" height="18" uuid="2aa7baa5-c318-4b16-a5ae-c1e0ed5a070b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CH       SR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="190" y="38" width="340" height="1" uuid="9454845f-7d5c-4859-a415-8c3dcb666e80"/>
+			</line>
+			<line>
+				<reportElement x="189" y="0" width="1" height="56" uuid="eb59c47e-a671-40ca-84bc-792a914dd7c7"/>
+			</line>
+			<line>
+				<reportElement x="422" y="20" width="1" height="36" uuid="a8d42751-1d61-4a1d-9a80-39c5a7a8ed14"/>
+			</line>
+			<line>
+				<reportElement x="10" y="55" width="519" height="1" uuid="20579227-f195-45d5-884a-3b6204b3fc55"/>
+			</line>
+			<line>
+				<reportElement x="79" y="1" width="1" height="55" uuid="59349c97-d0a6-4b93-8f34-6a307685ca39"/>
+			</line>
+			<line>
+				<reportElement x="190" y="20" width="339" height="1" uuid="60e4986a-b1b1-45db-8e87-7f0c2a4a2053"/>
+			</line>
+			<line>
+				<reportElement x="10" y="0" width="519" height="1" uuid="623b11a8-cca4-4a0f-8adb-bde33a893d5c"/>
+			</line>
+			<line>
+				<reportElement x="529" y="2" width="1" height="54" uuid="3ccc7484-d804-473f-bf04-64abe7c370f9"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="217" y="0" width="85" height="20" uuid="8f33a2ce-2bb6-45c6-9fa3-9f43413268b0"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{das1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="0" width="100" height="20" uuid="9fb810ee-6598-4072-9d8e-3d64a2c6530a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{das3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="319" y="0" width="95" height="20" uuid="4fec3a46-974b-4b49-99b8-64050258a833"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{das2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="10" y="0" width="70" height="20" uuid="3d8ec770-4e0c-4e90-9495-9f1461991ede"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{parameter_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="0" width="40" height="20" uuid="fdf2bdcf-5c11-4000-a767-6a665856d85f"/>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{provided}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="131" y="0" width="49" height="20" uuid="66b9444e-a7a2-491a-bb9c-91fd5c389261"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{requirement}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="230" y="-18" width="1" height="38" uuid="8f154072-da0b-431d-9480-08f658676514"/>
+			</line>
+			<line>
+				<reportElement x="333" y="-18" width="1" height="38" uuid="f00f0dc4-847b-41c1-901f-b598c2359887"/>
+			</line>
+			<line>
+				<reportElement x="447" y="-18" width="1" height="38" uuid="62f98883-2675-4f20-a068-6dbb941e209f"/>
+			</line>
+			<line>
+				<reportElement x="189" y="-20" width="1" height="40" uuid="881f8257-fd3e-4244-8e13-2ca0703fa963"/>
+			</line>
+			<line>
+				<reportElement x="422" y="0" width="1" height="20" uuid="7309b836-3d0d-4ca3-ab05-7b3b517fad95"/>
+			</line>
+			<line>
+				<reportElement x="10" y="19" width="520" height="1" uuid="4b819cd8-8459-4e25-b599-18fc8de9a2a4"/>
+			</line>
+			<line>
+				<reportElement x="302" y="-36" width="1" height="55" uuid="37fada24-16a8-4382-a854-4a2cedae5bcf"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

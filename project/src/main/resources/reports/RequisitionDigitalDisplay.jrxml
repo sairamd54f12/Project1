@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NewRequisitionDigitalDisplay" pageWidth="595" pageHeight="15" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="c475fb8a-3ef7-45d8-8718-d26852d81d5c">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="testbatchId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select  GROUP_CONCAT(tpd.parameter_name)as parameter_name from test_batch tb  inner join
+test_parameter_detail tpd
+on tb.id = tpd.test_batch_id  where digital_display = true
+and tb.id = $P{testbatchId}]]>
+	</queryString>
+	<field name="parameter_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="13">
+			<textField>
+				<reportElement x="262" y="0" width="287" height="13" uuid="39c6d126-a9b4-4f91-b400-4b371b417e93"/>
+				<textFieldExpression><![CDATA[$F{parameter_name}==null?"Not Required":$F{parameter_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="225" height="13" uuid="16d2ae42-3229-4ee9-8521-d05d6b95c2f7"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[18. Digital Display                           ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="0" width="9" height="13" uuid="c0e3f512-cff5-4a9f-9357-0fcdb7c660f2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</summary>
+	<noData>
+		<band height="14">
+			<staticText>
+				<reportElement x="245" y="1" width="9" height="13" uuid="35a38333-a2e6-4ac0-b8a1-ee6dffeb25d4"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="225" height="13" uuid="0c126ff7-0c23-4acc-8ef7-15cfeca29001"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[18. Digital Display                           ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="1" width="97" height="13" uuid="ce4165b9-ee09-445b-b5a4-c1e21a2834b0"/>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

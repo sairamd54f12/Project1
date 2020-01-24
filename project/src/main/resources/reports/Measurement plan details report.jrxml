@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Measurement plan details report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="731765c3-0b5e-4fa2-9cea-c8076e7e05e2">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="140" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-1" y="1" width="555" height="113" uuid="6e5f9c3b-d8d7-4696-ba73-3bdb908c7b72"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="67" width="555" height="1" uuid="6374c161-75f4-47cd-a369-4febe1348c1c"/>
+			</line>
+			<line>
+				<reportElement x="47" y="0" width="1" height="113" uuid="cb16efe9-31ba-4eb2-9a32-8acdfd3aea76"/>
+			</line>
+			<line>
+				<reportElement x="147" y="0" width="1" height="113" uuid="ed8819e2-59f8-4fdf-9d90-9caf09313057"/>
+			</line>
+			<line>
+				<reportElement x="249" y="0" width="1" height="113" uuid="ad265278-a968-4804-889a-ff6ddb67a5b0"/>
+			</line>
+			<line>
+				<reportElement x="315" y="2" width="1" height="111" uuid="de1ebba2-411e-4ff4-94d8-00b840730d4b"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="30" width="36" height="20" uuid="97a26a8f-482c-4def-8b31-a6318540fe9e"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SL.NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="30" width="79" height="20" uuid="3c4965d9-20cb-41a8-b8a9-9d97053d4eca"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[PARAMETERS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="30" width="81" height="20" uuid="b2c87617-a7cb-4d23-b2a8-0fcb978d7c48"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[REQUIREMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="30" width="55" height="20" uuid="c687b0a8-1a7a-479c-af66-00cd1f09a454"/>
+				<text><![CDATA[PROVIDED]]></text>
+			</staticText>
+			<line>
+				<reportElement x="316" y="29" width="238" height="1" uuid="6d7d2952-d49a-4c0f-84fe-2386b3ceccce"/>
+			</line>
+			<staticText>
+				<reportElement x="357" y="7" width="153" height="20" uuid="982ae4cb-5e46-4c2b-8f27-529e8e21f693"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[RECORDING SYSTEMS]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

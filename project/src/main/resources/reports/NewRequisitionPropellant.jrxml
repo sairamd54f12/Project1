@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NewRequisitionPropellant" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="36a6419b-b4c8-4f48-8a6c-6980b1665b41">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="testbatchId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  '14' sno, ppd.propellant_type, concat(truncate(weight,0),'  ',
+(select value from uom where id = ppd.weight_uom_id)) weight  from propellant_details ppd where test_batch_id  = $P{testbatchId};]]>
+	</queryString>
+	<field name="sno" class="java.lang.String"/>
+	<field name="propellant_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="weight" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="13">
+			<staticText>
+				<reportElement x="2" y="0" width="308" height="13" uuid="336ffef4-1c07-4c88-8180-bc9ce720e762"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[14 Propellant Details              ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="68" y="-1" width="152" height="13" uuid="ee4c2f2b-c4f3-4f34-830f-3375d45327d5"/>
+				<text><![CDATA[Type of propellant                    ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="68" y="11" width="152" height="13" uuid="e0883bdc-c5f9-49ce-98b1-d982706cf39a"/>
+				<text><![CDATA[ Weight of propellant                ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="12" y="-1" width="44" height="13" uuid="4eb6d897-3b22-4a0f-b1e0-70129e926861"/>
+				<textFieldExpression><![CDATA["14."+$V{REPORT_COUNT}.intValue()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="247" y="-1" width="9" height="13" uuid="c9520983-64b8-44f8-99f0-e9167c62fadb"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="11" width="9" height="13" uuid="c016eed4-1ecd-4562-846d-9bea75a99d0a"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="266" y="0" width="100" height="13" uuid="6949f833-6358-4b95-99ba-6c556b8a09b1"/>
+				<textFieldExpression><![CDATA[$F{propellant_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="11" width="100" height="13" uuid="9145e300-9800-4008-ac49-bbf32e30a3bf"/>
+				<textFieldExpression><![CDATA[$F{weight}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="37">
+			<textField>
+				<reportElement x="274" y="24" width="100" height="13" uuid="52524dcd-a805-4a73-8046-93db2059fe1f"/>
+				<textFieldExpression><![CDATA[$F{weight}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="12" width="100" height="13" uuid="39e10b4d-e9b9-4498-adb3-cfb154d00c1a"/>
+				<textFieldExpression><![CDATA[$F{propellant_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="76" y="24" width="144" height="13" uuid="87f98221-0227-4e0e-beb3-9639dcca276b"/>
+				<text><![CDATA[ Weight of propellant                  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="12" width="134" height="13" uuid="f02f4f1c-00ea-4dd8-ba81-1e038d4f21f7"/>
+				<text><![CDATA[Type of propellant                   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="0" width="308" height="13" uuid="e4827e40-20ab-4de4-b2bb-1ae41d5e204c"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[14 Propellant Details Type  of propellant                ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="12" width="9" height="13" uuid="7e162d2f-ba07-40a4-b76f-a203ae8353ab"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="24" width="9" height="13" uuid="06065c80-3fe4-4299-8806-e3edd617e838"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

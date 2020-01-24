@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NewRequisitionTotalDetails" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="8deeec68-96b4-4579-bb74-cc827c9ac837">
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="testbatchId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+concat(truncate(md.throat_dia,0),' ',(select value from uom where id=md.throat_dia_uom_id)) throat_dia,
+concat(truncate(tdd.throat_dia_individual,0),' ',(select value from uom where id=md.throat_dia_uom_id)) throat_dia_individual,
+
+md.id, md.motor_type, md.no_of_nozzles,md.throat_diameter
+
+from
+motor_details md left join throat_diameter_detail tdd on md.id=tdd.motor_details_id  where
+md.test_batch_id=$P{testbatchId}]]>
+	</queryString>
+	<field name="throat_dia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="throat_dia_individual" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motor_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_nozzles" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="throat_diameter" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="13" splitType="Prevent">
+			<staticText>
+				<reportElement x="1" y="0" width="308" height="13" uuid="e30db971-6c29-40e1-9b92-c089316ed42b"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[14. Details of Motor]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="37" splitType="Prevent">
+			<staticText>
+				<reportElement x="44" y="0" width="171" height="13" uuid="b04b3629-8643-412a-9b14-8072df62dc50"/>
+				<text><![CDATA[Type of Motor                                     ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="12" width="171" height="13" uuid="c9a751d0-3c2c-4398-a167-f5107714542c"/>
+				<text><![CDATA[No.of Nozzle(s)                                   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="263" y="12" width="100" height="13" uuid="9524b630-f35d-4dda-8990-5e9e0ccd2b61"/>
+				<textFieldExpression><![CDATA[$F{no_of_nozzles}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="44" y="24" width="85" height="13" uuid="0e770494-e1de-4af9-8e72-9d7ab9795011"/>
+				<text><![CDATA[Throat diameter                                  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="15" y="-1" width="44" height="13" uuid="5947a786-9c09-48b2-b2d5-fefc1a3c1996"/>
+				<textFieldExpression><![CDATA["14."+$V{REPORT_COUNT}.intValue()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="263" y="0" width="100" height="13" uuid="1ef200e8-7c96-4ac3-a537-bfe944349a15"/>
+				<textFieldExpression><![CDATA[$F{motor_type}==null ? "Nil":$F{motor_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="244" y="0" width="9" height="13" uuid="bffad9d4-1645-48ee-afb9-da6b1d3bc2bc"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="12" width="9" height="13" uuid="82e3c3cb-5739-40f7-900d-4d79d0531209"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="24" width="9" height="13" uuid="8dce4559-b968-4d9e-8f27-5bdd954bce51"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="263" y="24" width="229" height="13" uuid="cd72722a-2957-4b6a-803f-f2e8ab0f89c5"/>
+				<textFieldExpression><![CDATA[$F{throat_diameter} == true? $F{throat_dia}:$F{throat_dia_individual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="24" width="61" height="13" uuid="59f47e5d-7c78-4482-8234-fd25059220dd"/>
+				<textFieldExpression><![CDATA[$F{throat_diameter} == true? "(Average)":"(Individual)"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="49" splitType="Prevent">
+			<staticText>
+				<reportElement x="44" y="12" width="163" height="13" uuid="e7461ab3-232b-42fa-80fa-eabb78dc6274"/>
+				<text><![CDATA[Type of Motor                                     ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="36" width="163" height="13" uuid="6442b75a-7b4b-4539-937b-ca9f2b0e9628"/>
+				<text><![CDATA[Throat diameter                                  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="24" width="163" height="13" uuid="454c304a-a8f0-4bf4-ae5a-d52de40ef717"/>
+				<text><![CDATA[No.of Nozzle(s)                                   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="363" height="13" uuid="7cf411be-3264-4662-908a-d7b8babfc635"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[14. Details of Motor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="12" width="101" height="13" uuid="46be394d-8abc-4639-b919-f179be95f104"/>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="24" width="100" height="13" uuid="2b43ddf7-b550-4988-8834-2c6d080249d5"/>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="36" width="102" height="13" uuid="d78abd85-8115-4229-aca1-646ae899a4fb"/>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="12" width="9" height="13" uuid="200ecfd4-a01f-48e7-be9b-0c6f8b506ab3"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="24" width="9" height="13" uuid="1d358a51-200f-4621-bdc9-c00eb89d83ba"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="36" width="9" height="13" uuid="eabf0e4f-bf85-4808-8213-04a251967db1"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report4" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c91aa42-7e33-472e-a65d-fd6ba31de223">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="212" splitType="Stretch">
+			<staticText>
+				<reportElement x="319" y="0" width="127" height="20" uuid="fed01df1-6b1c-4b16-bf12-9ed754af95af"/>
+				<text><![CDATA[SIGNATURE,NAME AND RANK OF AUTHORISED ISSUING OFFICER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="23" width="100" height="20" uuid="edcd3c09-5a3e-4602-9e72-d39624660c45"/>
+				<text><![CDATA[Tel.No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="179" width="269" height="20" uuid="26bab2b2-8771-4112-be24-b45def4587be"/>
+				<text><![CDATA[Signature of Security Assistant:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="110" height="20" uuid="767e29fd-9a38-47cb-a796-262009536fb2"/>
+				<text><![CDATA[SIGNATURE,NAME AND RANK OF STOCK/INVENTORY HOLDER:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="149" width="270" height="20" uuid="af66221c-d0ee-49a6-9cb4-d5ba57c6fccd"/>
+				<text><![CDATA[Stores Returned on                                            (Date)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="118" width="270" height="20" uuid="9218c58f-5820-4365-be68-17883db9c244"/>
+				<text><![CDATA[Signature of Security Assistant:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="23" width="100" height="20" uuid="ab973e8e-77a6-4ac8-b6cd-3c097317fbc0"/>
+				<text><![CDATA[Tel.No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="52" width="424" height="20" uuid="a571bfb5-16cc-487e-b34c-9a83d55109ca"/>
+				<text><![CDATA[Checked and passed out at                               hrs. on                                                (date)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="85" width="271" height="20" uuid="109a33f8-5873-45e9-ad98-62dbf43b615d"/>
+				<text><![CDATA[Security out control no:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="134" y="20" width="100" height="20" uuid="96b61f20-c694-49a7-ac46-f7eb1ca28f4f"/>
+				<textFieldExpression><![CDATA[$F{telephone_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="22" width="90" height="20" uuid="af1a8471-fe6d-4e14-ad90-95f14bd3a3b3"/>
+				<textFieldExpression><![CDATA[$F{telephone_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

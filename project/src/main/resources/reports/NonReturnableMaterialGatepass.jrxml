@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NonReturnableMaterialGatepass" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f4abfb5-6e12-46da-af1e-244ae493dd4e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SubReportPath" class="java.lang.String"/>
+	<parameter name="nonreturnablematerialGatepassId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from non_returnable_material_gatepass where id = $P{nonreturnablematerialGatepassId}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pass_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="consignee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="eiv_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_no_of_items" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_packages" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purpose_of_issue" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="authority" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vehicle_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loaded_in_presence_of" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name_of_person_carrying_stores" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="doi_designation_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name_of_stock_holder" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name_of_authorized_issuing_officer" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telephone_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="security_out_control_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="returned_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="checked_passed_out_time_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_items" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement x="310" y="113" width="53" height="20" uuid="a82dc797-efad-4768-9fca-c903f0d64e2b"/>
+				<text><![CDATA[book no:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="462" y="13" width="72" height="17" uuid="95b076bd-8563-460c-a871-08d316190aef"/>
+				<text><![CDATA[In Triplicate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="61" width="278" height="20" uuid="ab9c8435-6197-4c75-beb3-e46f4644199c"/>
+				<text><![CDATA[   NON RETURNABLE MATERIAL GATEPASS (NRMGP)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="92" width="82" height="20" uuid="37f8f7ce-8701-4b06-84ce-c28858cc2ba1"/>
+				<text><![CDATA[Consignee:	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="130" width="53" height="20" uuid="c756a81b-b3d1-4653-8d71-1efd415a1b1e"/>
+				<text><![CDATA[date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="462" y="1" width="72" height="15" uuid="34fa3cd6-5151-4e45-bcdc-bd332934c2c0"/>
+				<text><![CDATA[DRDO SM 18]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="92" width="54" height="20" uuid="ee64615e-64fa-4745-b14a-e39a2b7532a2"/>
+				<text><![CDATA[pass no:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="31" width="328" height="29" uuid="69bcec49-9bac-4dff-bfef-6b9c23f4a537"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[     DEFENCE  RESEARCH  &  DEVELOPMENT  LABORATORY                PO:KANCHANBAGH,HYDERABAD - 500058]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="130" width="81" height="20" uuid="1fe7c054-f47c-4f3e-b12d-03d6a578e1cb"/>
+				<text><![CDATA[EIV NO & Date:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="92" width="185" height="20" uuid="8b3a550c-d956-4735-910e-afe2dcf92d6f"/>
+				<textFieldExpression><![CDATA[$F{consignee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="130" width="46" height="17" uuid="dedff476-ed93-4bc7-955d-85c8996b2de7"/>
+				<textFieldExpression><![CDATA[$F{eiv_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="130" width="34" height="17" uuid="1476b005-021e-4b9e-a2ed-02acef1605ab"/>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="92" width="128" height="20" uuid="8ce9eee5-464d-4fc5-8d67-d0786110b6bb"/>
+				<textFieldExpression><![CDATA[$F{pass_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="130" width="128" height="20" uuid="fbf59355-7cbc-4429-ac4a-c499a94f96a3"/>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="34" splitType="Immediate">
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="309" height="34" uuid="ee1502b1-9e19-45f6-8359-6d7331d4c745"/>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nonreturnablematerialGatepassId">
+					<subreportParameterExpression><![CDATA[$P{nonreturnablematerialGatepassId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "NonReturnableMaterialGatepass_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="32" splitType="Immediate">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="309" height="32" uuid="5562864b-85da-4a48-bebd-382634140557"/>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nonreturnablematerialGatepassId">
+					<subreportParameterExpression><![CDATA[$P{nonreturnablematerialGatepassId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "NonReturnableMaterialGatepass_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="168">
+			<staticText>
+				<reportElement x="323" y="4" width="171" height="29" uuid="0eadbf70-5b8f-4560-a36c-6a0d43442270"/>
+				<text><![CDATA[SIGNATURE,NAME AND RANK OF AUTHORISED ISSUING OFFICER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="39" width="100" height="20" uuid="1aa25dac-dc76-4e70-9998-a550f8f1affe"/>
+				<text><![CDATA[Tel.No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="6" width="162" height="27" uuid="85205e53-1b55-4fd1-bfb4-75ab659c993e"/>
+				<text><![CDATA[SIGNATURE,NAME AND RANK OF STOCK/INVENTORY HOLDER:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="132" width="153" height="20" uuid="4c9a18f4-c283-4854-b4c2-c905d91b4784"/>
+				<text><![CDATA[Signature of Security Assistant:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="40" width="100" height="20" uuid="21f07554-6ee5-4966-9bbd-28c4891345e8"/>
+				<text><![CDATA[Tel.No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="66" width="524" height="20" uuid="e76ad0b6-52d0-43b1-bb22-16d1054a00e5"/>
+				<text><![CDATA[Checked and passed out at                                                            hrs. on                   (date)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="99" width="136" height="20" uuid="1d751e98-3373-489b-a705-d91a4371ae1f"/>
+				<text><![CDATA[Security out control no:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="179" y="40" width="104" height="19" uuid="72c61af2-d917-40f3-bf0e-3532af28aeb7"/>
+				<textFieldExpression><![CDATA[$F{telephone_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="40" width="109" height="19" uuid="0aefaad2-c17c-4424-97d4-2022afc59210"/>
+				<textFieldExpression><![CDATA[$F{telephone_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="66" width="164" height="20" uuid="9f1236d5-68cf-40c8-bcde-7a539abc7ec5"/>
+				<textFieldExpression><![CDATA[$F{checked_passed_out_time_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="99" width="145" height="20" uuid="d08c376b-07df-49a2-ab0c-a23e4b544055"/>
+				<textFieldExpression><![CDATA[$F{security_out_control_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

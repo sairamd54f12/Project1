@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5387237-2ec2-4dda-8b1e-fed9b42e1e2a">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="571"/>
+	<property name="ireport.y" value="384"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="07e7845e-0675-4ebc-b7fa-0f56e9c3e3fb"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\callippus\\DOI\\src\\main\\resources\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="requisitionId" class="java.lang.String"/>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT req.id,tb.id testBatchId, pm.project_name , tm.test_bed_name, tb.test_nomenclature,tb.proposed_date_time FROM
+requisition req, test_batch tb, project_master pm, test_bed_master tm where pm.id =req.project_master_id and
+ tm.id =req.test_bed_master_id and req.id= $P{requisitionId} and tb.requisition_id = (select requisition_id from test_batch where test_batch.id = $P{testBatchId})]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="testBatchId" class="java.lang.Long"/>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_nomenclature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proposed_date_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="170" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="17" width="524" height="20" uuid="aefa630d-b7da-41cb-b801-b6714ccf2836"/>
+				<textElement textAlignment="Center">
+					<font size="14" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[INSTRUMENTATION MEASUREMENT PLAN FOR STATIC TEST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="67" width="101" height="20" uuid="00ed83ca-eb23-4db4-80f1-b498b878c6ae"/>
+				<text><![CDATA[REQUISITION SL.NO:	]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="67" width="100" height="20" uuid="54775368-26e8-43fe-97eb-f653e980a672"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="100" width="100" height="20" uuid="023f48f6-0726-4dc9-8f28-86f1c999dc1c"/>
+				<textFieldExpression><![CDATA[$F{proposed_date_time}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="102" width="68" height="20" uuid="f57c0a1b-a53f-49e5-becb-21f03a4a4641"/>
+				<text><![CDATA[TEST DATE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="136" width="100" height="20" uuid="3fea5ba7-ef69-4dc8-a874-ba25e2b4e97d"/>
+				<text><![CDATA[TEST BED:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="136" width="100" height="20" uuid="bac74530-cdb9-4f88-a8af-a4ee64ac20ce"/>
+				<textFieldExpression><![CDATA[$F{test_bed_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="102" width="100" height="20" uuid="fa49db81-4817-4358-b15b-81ac8e3d2ffd"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="102" width="100" height="20" uuid="bfa21fc6-375b-4b13-91ee-899a19eab915"/>
+				<text><![CDATA[PROJECT:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="372" y="67" width="100" height="20" uuid="d4dc5081-5c95-40dc-a560-4f0cd709375e"/>
+				<textFieldExpression><![CDATA[$F{test_nomenclature}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="67" width="68" height="20" uuid="dd9c75f7-323b-4997-b629-166267b2081d"/>
+				<text><![CDATA[TEST NAME:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="35" uuid="d3f74b03-88dc-4f23-a554-501bbe3c8dd5"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report2_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="98">
+			<staticText>
+				<reportElement x="0" y="0" width="101" height="20" uuid="682c0581-79f7-46fe-9944-6fd2aeb4ce37"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[USER'S SIGNATURE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="0" width="131" height="20" uuid="f4d42b6e-f41a-4425-aca7-6a58b044e54e"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[SIGNATURE OF DOI REP:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="100" height="20" uuid="0dd064b1-1a93-432c-be8b-b6272739094e"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[NAME: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="53" width="100" height="20" uuid="d68fa217-8a61-48cd-9366-0af2121392c6"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[DESIGNATION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="26" width="100" height="20" uuid="eac7ea10-4d8c-406e-9aee-2585bf5de5f7"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[NAME:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="53" width="100" height="20" uuid="879936b7-b898-4c39-8623-f5a79bf0dc71"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[DESIGNATION:]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="103"/>
+	</summary>
+</jasperReport>

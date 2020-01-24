@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NonReturnableMaterialGatepass_subreport2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e49a7812-7091-4dc3-a76e-2b0a32897170">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nonreturnablematerialGatepassId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select ng.id,pass_no,consignee,eiv_no,total_no_of_items,
+no_of_packages,purpose_of_issue,authority,
+vehicle_no,loaded_in_presence_of,
+name_of_person_carrying_stores,dd.desigalias,name_of_stock_holder,
+name_of_authorized_issuing_officer,telephone_no,security_out_control_no,date,returned_date,
+checked_passed_out_time_date from non_returnable_material_gatepass ng,doi_designation dd where ng.doi_designation_id = dd.id and ng.id = $P{nonreturnablematerialGatepassId}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pass_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="consignee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="eiv_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_no_of_items" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_packages" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purpose_of_issue" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="authority" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vehicle_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loaded_in_presence_of" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name_of_person_carrying_stores" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="desigalias" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name_of_stock_holder" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name_of_authorized_issuing_officer" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telephone_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="security_out_control_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="returned_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="checked_passed_out_time_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="146" splitType="Immediate">
+			<staticText>
+				<reportElement x="11" y="4" width="88" height="20" uuid="acf04f00-9621-4da4-a40b-79f1ba91b367"/>
+				<text><![CDATA[Total No Of Items:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="4" width="84" height="20" uuid="1fc3f196-ebf9-4131-8ec0-f583844285a5"/>
+				<text><![CDATA[No of packages:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="27" width="88" height="19" uuid="38741b2b-fe06-4044-8c7b-a04dec8b0fe9"/>
+				<text><![CDATA[Purpose of issue:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="50" width="100" height="20" uuid="eaeb8436-1b37-465f-8de1-79e926a1d3e2"/>
+				<text><![CDATA[Authority:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="28" width="100" height="18" uuid="06231f13-642b-415e-9a83-cbb4613622c1"/>
+				<text><![CDATA[Transport/Vehicle no:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="48" width="132" height="20" uuid="f6c40637-d879-4f64-a107-99001ea26843"/>
+				<text><![CDATA[Loaded in the presence of:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="70" width="131" height="29" uuid="35402cea-fe88-4309-a2f9-c255ad1b24f0"/>
+				<text><![CDATA[Signature of person carrying the stores:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="103" width="130" height="19" uuid="fc79355f-56bd-448c-ba42-23a4cadb05b2"/>
+				<text><![CDATA[Name & Designation:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="153" y="4" width="100" height="20" uuid="c6b482a0-749f-410a-80d1-cc14301ff3b9"/>
+				<textFieldExpression><![CDATA[$F{total_no_of_items}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="28" width="100" height="19" uuid="650c315b-014d-4ca3-8c36-688a8f370585"/>
+				<textFieldExpression><![CDATA[$F{purpose_of_issue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="50" width="100" height="20" uuid="b67007ae-296a-499c-8077-f7dad18ed11f"/>
+				<textFieldExpression><![CDATA[$F{authority}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="28" width="113" height="18" uuid="aa889110-9613-4f74-a9c2-b07ad6f9995b"/>
+				<textFieldExpression><![CDATA[$F{vehicle_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="48" width="118" height="20" uuid="b71a001f-b701-4e9c-9e6b-89aed103f3b8"/>
+				<textFieldExpression><![CDATA[$F{loaded_in_presence_of}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="4" width="99" height="20" uuid="6a755fcf-0710-442d-ab45-1d12b13dc9f3"/>
+				<textFieldExpression><![CDATA[$F{no_of_packages}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="101" width="100" height="20" uuid="bb009903-5776-483a-9065-a76f7b4a9488"/>
+				<textFieldExpression><![CDATA[$F{desigalias}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

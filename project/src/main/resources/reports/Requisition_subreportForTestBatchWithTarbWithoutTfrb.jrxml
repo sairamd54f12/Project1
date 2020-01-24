@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Requisition_subreportForTestBatchWithTarbWithoutTfrb" pageWidth="690" pageHeight="842" columnWidth="650" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="3bd0c001-5034-4e64-8001-1304ec2ba186">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SubReportPath" class="java.lang.String"/>
+	<parameter name="requisitionId" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+tb1.id as id,r1.id as id1 ,tb1.sensor_layout as sensor_layout,tb1.predicted_data as predicted_data
+FROM
+     `requisition` r1 INNER JOIN `project_master` pm ON r1.`project_master_id` = pm.`id`
+     INNER JOIN `test_bed_master` tbm ON r1.`test_bed_master_id` = tbm.`id` Inner join `test_batch` tb1 ON tb1.`requisition_id` = r1.`id`
+WHERE
+r1.id =
+$P{requisitionId} and tb1.id = $P{testBatchId}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id1" class="java.lang.Long"/>
+	<field name="sensor_layout" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="predicted_data" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="id" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="31" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="514" height="31" uuid="d5b02b37-b02d-4a64-976f-94cfba366e7d"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$F{id1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "RequisitionTittleForTB.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="32" splitType="Immediate">
+			<subreport>
+				<reportElement x="1" y="0" width="513" height="32" uuid="055a7651-b175-414f-b6e3-bf5e7bd58fd2"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "RequisitionTestBatchBasedOnTestBatchWithTarbWithoutTfrb.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="32" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="514" height="32" uuid="ba739613-a086-4d2c-a771-295f3ffa739e"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Test_Parameter.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="33" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="513" height="32" uuid="bb940aaf-4350-48d1-a4ec-740ac71de5aa"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Test_Parameter_Details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="27" splitType="Immediate">
+			<textField>
+				<reportElement x="281" y="0" width="369" height="13" uuid="dd5343e9-af64-42c1-bfe1-c3afeef19124"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{sensor_layout}.equalsIgnoreCase(""))? "Not Provided" : "Provided"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="13" width="369" height="14" uuid="601d6a88-e84c-4917-b1fd-54c304befe8f"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{predicted_data}.equalsIgnoreCase(""))? "Not Provided" : "Provided"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="13" width="244" height="14" uuid="491cc3b4-499a-4ebc-b683-ac246e8e5954"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[13. Softcopy of predicted data                                ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="0" width="244" height="13" uuid="e998b153-f019-4e63-b860-e00dd622b672"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[12. Diagram of Sensor Locations on Test Article   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="1" width="15" height="13" uuid="4ccb4f09-7732-446a-ba00-9529a1401b13"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="13" width="15" height="14" uuid="c72e9ca3-0dd8-4184-b275-5317f9efc702"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+		<band height="32" splitType="Immediate">
+			<subreport>
+				<reportElement x="-1" y="0" width="515" height="32" uuid="a2a131a7-acea-4095-ba66-b4996630555d"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Motor_Details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="32" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="515" height="32" uuid="c2094edc-7b03-4547-a62c-4c72773895c2"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "RequisitionPropellant.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="15" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="513" height="15" isRemoveLineWhenBlank="true" uuid="58ee5ce4-115e-4f72-b8a9-d2afc8a53981"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Video_Details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="15" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="513" height="15" uuid="299aca82-16a3-40b3-aad3-339a12adfc6f"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "RequisitionPhotoGraphyDetails.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="15" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="513" height="15" uuid="76e774d3-9b24-4125-ae7c-5b5b98cf25a2"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "RequisitionDigitalDisplay.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="16" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="514" height="16" uuid="21786929-e34d-4f4b-bed5-b948072a54c3"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "RequisitionDataAcquisition.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="26" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="513" height="26" uuid="f64f7f03-b546-4bf7-bd19-598d5dc535a7"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Data_Presentation_Details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="30" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="513" height="30" uuid="968fa02d-61c7-4314-be02-be982627225c"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Trial_Team_Details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="33" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="512" height="33" uuid="b1864490-59bc-4d1d-87d1-f40b9b099159"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testbatchId">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Controller_Officer.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="31">
+			<staticText>
+				<reportElement x="45" y="0" width="363" height="16" uuid="7b50690f-5c56-4074-9516-d0b4872205cd"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[      1.   For clarification please contact test controller of DOI.           ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="15" width="334" height="16" uuid="c16c057b-6976-462e-8a2a-4c9c55d011b2"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[            2.  Ensure that all relevant columns are filled properly.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="1" width="43" height="15" uuid="4b04fcec-bb80-431c-a481-2c54a31bea65"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Note :]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

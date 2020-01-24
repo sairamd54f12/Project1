@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RequisitionTittleForTB" pageWidth="680" pageHeight="842" columnWidth="640" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="e5b4c491-5dcf-42b4-987e-8ccffbf5db0e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requisitionId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     *
+FROM
+     `requisition` r1 INNER JOIN `project_master` pm ON r1.`project_master_id` = pm.`id`
+     INNER JOIN `test_bed_master` tbm ON r1.`test_bed_master_id` = tbm.`id` INNER JOIN test_batch tb ON r1.id = tb.requisition_id
+WHERE
+r1.id = $P{requisitionId} and tb.id = $P{testBatchId}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_master_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_tests_planned" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_test_batches" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_master_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarb_details" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="division_reference_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarb_status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="incharge_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="predicted_data" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="is_ambient" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="non_ambient_temperature" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="burning_time" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sensor_layout" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_nomenclature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_objective" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_tests_in_batch" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_parameters" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proposed_date_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_acquisition" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="burning_time_uom_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="non_ambient_temperature_uom_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="video_acquisition" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="107" splitType="Prevent">
+			<textField>
+				<reportElement x="127" y="48" width="339" height="15" uuid="55ed0516-520f-450b-958f-e1a7a30c4adb"/>
+				<textFieldExpression><![CDATA[($F{requisition_no}==null)? "Not Submited" : $F{requisition_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="48" width="120" height="15" uuid="6b9e50ad-b31a-4da8-94c5-4f7940b099d3"/>
+				<text><![CDATA[REQUISITION NO          :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="5" width="301" height="20" uuid="652275d4-a9c1-4e10-85e2-16f16082bc9d"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTORATE OF INSTRUMENTATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="76" width="526" height="15" uuid="ab680ade-ba47-4ce6-b8bc-b206eb861561"/>
+				<text><![CDATA[You are requested to arrange Instrumentation for the static testing of the following rocket motor,The measurement ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="26" width="241" height="20" uuid="b4ac3ffe-dab1-409c-8dc3-b677a32ca4db"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[STATIC TEST REQUISITION ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="62" width="120" height="15" uuid="02f32ea6-4b78-439d-94a7-a364f18481c3"/>
+				<text><![CDATA[Division Reference No    :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="128" y="62" width="259" height="15" uuid="7c7293b1-0643-43c4-8410-072a7df6c98c"/>
+				<textFieldExpression><![CDATA[$F{division_reference_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="91" width="526" height="15" uuid="07eac386-ef03-45a5-9005-4ca5efb1057a"/>
+				<text><![CDATA[details are as under]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="502" y="47" width="34" height="13" uuid="d2dd9cc8-715b-45d9-b233-ad20e2b0d399"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="536" y="47" width="102" height="15" uuid="72aed900-b903-4da7-8e23-755ab66d2042"/>
+				<textFieldExpression><![CDATA[$F{requisition_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

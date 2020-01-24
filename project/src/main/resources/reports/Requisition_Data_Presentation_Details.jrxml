@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NewRequisition_subreport5" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="8c9a7ab0-3094-463f-bd7b-9cbcd6159273">
+	<property name="ireport.zoom" value="1.652892561983471"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="testbatchId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select (truncate(dpr.analog_plots_duration_from,0)) analog_plots_duration_from
+
+, concat(truncate(dpr.analog_plots_duration_to,0),' ',(select value from uom where id=dpr.analog_dur_to_uom_id)) analog_plots_duration_to
+,
+
+(truncate(dpr.digital_data_time_interval_from,0)) digital_data_time_interval_from ,
+concat(truncate(dpr.digital_data_time_interval_to,0),' ',(select value from uom where id=dpr.digital_interval_to_uom_id)) digital_data_time_interval_to
+ ,analysis ,
+
+concat(truncate(dpr.time_interval,0),' ',(select value from uom where id=dpr.digital_interval_to_uom_id)) time_interval,concat(truncate(dpr.analog_time_interval,0),' ',(select value from uom where id=dpr.digital_interval_to_uom_id)) analog_time_interval, softcopy_required
+
+
+ from data_presentation_requirements dpr where dpr.test_batch_id
+
+ =$P{testbatchId}]]>
+	</queryString>
+	<field name="analog_plots_duration_from" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="analog_plots_duration_to" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="digital_data_time_interval_from" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="digital_data_time_interval_to" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="analysis" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_interval" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="analog_time_interval" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="softcopy_required" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="13">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="218" height="13" uuid="bf5ce2d4-f63a-4e4e-ae53-f054c657b426"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[20. Data Presentation Requirements                              ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="73" splitType="Prevent">
+			<staticText>
+				<reportElement x="46" y="0" width="167" height="13" uuid="1c6962c6-ec94-4855-9338-cebf8ecdd4da"/>
+				<text><![CDATA[a)   Analog plots   -  Duration                              :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="22" width="166" height="13" uuid="ffd6a7db-d513-4e42-b885-86ce7fb2257e"/>
+				<text><![CDATA[b)   Digital data  -   Duration            ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="46" width="166" height="13" uuid="4316d264-3ae6-4e4d-8e46-559a6ff14b28"/>
+				<text><![CDATA[c)   Analysis                                   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="58" width="166" height="13" uuid="703d988e-7f2d-41e4-983c-6c3c78d95672"/>
+				<text><![CDATA[d)   Soft copy required                     ]]></text>
+			</staticText>
+			<textField pattern="###0">
+				<reportElement x="252" y="21" width="305" height="13" uuid="c84826fa-3156-4a60-b201-b3c2ad342e6b"/>
+				<textFieldExpression><![CDATA["t0-" +$F{digital_data_time_interval_from} +"  "+"-"+"  "+ "t0+" +($F{digital_data_time_interval_to}==null?"0 Sec":$F{digital_data_time_interval_to})]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="252" y="33" width="223" height="13" uuid="d6c39f49-d46f-4137-8201-eb990082f9a1"/>
+				<textFieldExpression><![CDATA[$F{time_interval}==null?"Nil":$F{time_interval}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="252" y="45" width="224" height="13" uuid="0062e904-f464-4c07-9ff7-ce484c867711"/>
+				<textFieldExpression><![CDATA[$F{analysis}==true?"Required":"Not Required"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="47" y="34" width="166" height="13" uuid="8fe6133f-a689-4ccc-ad39-9d8d5c14b674"/>
+				<text><![CDATA[             Time interval                              ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="25" y="1" width="22" height="20" uuid="0a79c244-488e-410a-9e0b-44b1a43e093f"/>
+				<textFieldExpression><![CDATA["20."]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="252" y="1" width="305" height="13" uuid="d9cad048-970a-4fa6-a1c0-a2380bdb5e85"/>
+				<textFieldExpression><![CDATA["t0-"+$F{analog_plots_duration_from} +"  "+"-"+"  "+ "t0+" +$F{analog_plots_duration_to}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="1" width="9" height="13" uuid="3cfa0e01-2981-427a-b549-bf82fe0203f0"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="45" width="9" height="13" uuid="5f569dbe-780a-45c8-97fd-533f7fce782f"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="57" width="9" height="13" uuid="8b3b48a8-7ef2-4538-a0da-e1e0b705aa4f"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="33" width="9" height="13" uuid="0c669baa-6b35-477f-9b86-290249e75cb7"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="21" width="9" height="13" uuid="f5e4b679-0422-469f-ab0a-4eaa39eba642"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="252" y="57" width="223" height="13" uuid="a0ec99da-e297-4688-92b0-83a571510b3c"/>
+				<textFieldExpression><![CDATA[$F{softcopy_required}==true?"Yes":"No"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="47" y="11" width="166" height="13" uuid="356ae362-2783-48e9-9b69-272e55b98e6b"/>
+				<text><![CDATA[             Time interval                              ]]></text>
+			</staticText>
+			<textField pattern="###0">
+				<reportElement x="252" y="12" width="292" height="13" uuid="812660fb-4b73-484b-aa4a-a9e33eb92bfb"/>
+				<textFieldExpression><![CDATA[$F{analog_time_interval}==null?"Nil":$F{analog_time_interval}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="11" width="9" height="13" uuid="f71f292f-b857-492d-b0c1-25c6911bb7e6"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<noData>
+		<band height="84" splitType="Prevent">
+			<textField>
+				<reportElement x="252" y="33" width="100" height="13" uuid="508f185a-5179-4b2e-92b1-d286bb8e2764"/>
+				<textFieldExpression><![CDATA["Nil"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="252" y="57" width="100" height="13" uuid="04cd3157-3a6d-40da-b65e-8b4bacc491d9"/>
+				<textFieldExpression><![CDATA["Nil"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="252" y="45" width="100" height="13" uuid="800ef249-6c77-4524-901c-6df8f04ebca8"/>
+				<textFieldExpression><![CDATA["Nil"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="13" width="22" height="13" uuid="d8b1f777-64c4-405c-b19c-f85daa526f71"/>
+				<textFieldExpression><![CDATA["20."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="210" height="13" uuid="7f54763b-21cb-4788-a34c-ffd355b7c026"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[20. Data Presentation Requirements                                 ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="252" y="70" width="100" height="13" uuid="4bdb5064-5b42-4d7f-a98d-4ddc42c117dd"/>
+				<textFieldExpression><![CDATA["Nil"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="44" y="69" width="172" height="13" uuid="e18b5d9d-2b1b-46d4-9402-d890749d55ae"/>
+				<text><![CDATA[d)   Soft copy required                                                    ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="45" width="171" height="13" uuid="126f7651-6877-4320-941c-4daf0466571f"/>
+				<text><![CDATA[          Time interval                                                                 ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="57" width="172" height="13" uuid="66d554fc-36ad-453f-8929-c6bac9576809"/>
+				<text><![CDATA[c)   Analysis                                                                   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="12" width="172" height="13" uuid="79555fee-cb8d-42d3-86db-ddd5a4ad09e2"/>
+				<text><![CDATA[a)   Analog plots   -  Duration                                       ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="33" width="172" height="13" uuid="0bf7a51f-100e-4883-b007-0560724e59a1"/>
+				<text><![CDATA[b)   Digital data  -   Duration                                         ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="252" y="12" width="100" height="13" uuid="054785d3-b4eb-40dd-bbeb-3093b46a1248"/>
+				<textFieldExpression><![CDATA["Nil"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="69" width="9" height="13" uuid="b4e0f561-bc31-4a75-b338-5a15c67bb0b2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="56" width="9" height="13" uuid="d602d5a4-e9ae-41ce-8014-f2872a45ca87"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="43" width="9" height="13" uuid="b606a2f1-68bb-470e-b83b-b507a08b67da"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="10" width="9" height="13" uuid="d6aeb4f9-9714-47e4-b700-7a371530d58c"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="31" width="9" height="13" uuid="39116ad3-4364-4067-8ffe-f99fa63d6944"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="23" width="170" height="13" uuid="e42c878b-b84e-4907-a508-4a3af27615c2"/>
+				<text><![CDATA[             Time interval                              ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="21" width="9" height="13" uuid="10a4345b-2dd9-43d7-ac6c-4b0ad8a48d15"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="252" y="22" width="100" height="13" uuid="90f045f2-bdd1-42cf-8ae2-5b5bae089522"/>
+				<textFieldExpression><![CDATA["Nil"]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

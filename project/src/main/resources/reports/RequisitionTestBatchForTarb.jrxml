@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RequisitionTestBatchForTarb" pageWidth="730" pageHeight="842" columnWidth="690" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="9a7db477-d74c-4cd1-b3d8-a54c1a784d2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requisitionId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SubReportPath" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+r1.id,
+     project_name,test_nomenclature,test_objective,proposed_date_time,
+test_bed_name,no_of_tests_planned,tarb_details,tfrb_details,is_ambient,tb.no_of_tests_in_batch
+,
+case when concat(truncate(non_ambient_temperature,0),' ',(select value from uom where id=non_ambient_temperature_uom_id)) is null then "Not Provided" else concat(truncate(non_ambient_temperature,0),' ',(select value from uom where id=non_ambient_temperature_uom_id)) end as non_ambient_temperature
+
+
+FROM
+     requisition r1
+left outer  join
+ project_master  pm ON r1.project_master_id = pm.id
+     left outer  join  test_bed_master  tbm ON r1.test_bed_master_id = tbm.id left outer join test_batch tb on(tb.requisition_id=r1.id)
+
+WHERE
+tb.id  = $P{requisitionId}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_nomenclature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_objective" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proposed_date_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_tests_planned" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarb_details" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tfrb_details" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="is_ambient" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_tests_in_batch" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="non_ambient_temperature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="48" width="218" height="13" uuid="7f0eab89-3429-442e-89b2-298f0d625d55"/>
+				<text><![CDATA[5. Test bed                                                      ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="84" width="218" height="13" uuid="645a063d-5db0-4a10-9140-3829f62259c0"/>
+				<text><![CDATA[8. Whether TARB Meeting is  planned                ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="72" width="218" height="13" uuid="d1f6edb4-2e7b-40b5-95c8-17b4d32b2ae4"/>
+				<text><![CDATA[7. No.of tests planned                                         ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="218" height="13" uuid="ed94d205-2f8a-44bd-bbc7-9fc13e0e6ef2"/>
+				<text><![CDATA[1. Project                                                         ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="218" height="13" uuid="98235c70-b1fd-4043-959b-2089a3231a28"/>
+				<text><![CDATA[4. Proposed date and time                              ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="24" width="218" height="13" uuid="c511dbc5-bc98-463d-98dd-1108bcb868eb"/>
+				<text><![CDATA[3. Objective of the test                                     ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="218" height="13" uuid="c481c3fa-4c0c-41fb-9ee9-12123211b37c"/>
+				<text><![CDATA[6. Test condition                                              ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="12" width="218" height="13" uuid="01dfcce2-6741-4367-b26a-3849a243b2c6"/>
+				<text><![CDATA[2. Nomenclature of the test                             ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="253" y="0" width="150" height="13" uuid="bc4358ce-33be-4811-8f97-f2f93cac9909"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="253" y="12" width="302" height="13" uuid="49d1b09f-1579-4194-ba17-e4bb7e85ebaa"/>
+				<textFieldExpression><![CDATA[$F{test_nomenclature}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="253" y="24" width="302" height="13" uuid="3117dd2c-c0fb-40e5-951a-2f72a313cca8"/>
+				<textFieldExpression><![CDATA[$F{test_objective}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="253" y="36" width="150" height="13" uuid="e314e7f0-ac5b-4517-8937-148145bf40f5"/>
+				<textFieldExpression><![CDATA[$F{proposed_date_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="253" y="48" width="150" height="13" uuid="93e9c0b3-037a-49fb-bc37-41c49d9069d7"/>
+				<textFieldExpression><![CDATA[$F{test_bed_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="253" y="60" width="302" height="13" uuid="071c62dc-7c75-4175-9460-f0d7acf618fd"/>
+				<textFieldExpression><![CDATA[$F{is_ambient}==true?"Conditioned("+$F{non_ambient_temperature}+")":"Ambient"+"("+$F{non_ambient_temperature}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="253" y="84" width="224" height="13" uuid="79fc7356-b1c1-458a-b14d-35b21bce4892"/>
+				<textFieldExpression><![CDATA[$F{tarb_details}==true?"Planned":"Not Planned"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="0" width="9" height="13" uuid="0f179b61-0098-4485-8eec-102c007e1de6"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="12" width="9" height="13" uuid="4852ed33-643e-4c8d-a8cb-07f30f13736b"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="24" width="9" height="13" uuid="dd86e33a-9b11-4c26-9c10-5d57e2e4e72d"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="36" width="9" height="13" uuid="961e24f0-b76f-4c27-9e04-1e3e88395ebb"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="48" width="9" height="13" uuid="063b78d0-fc69-4c8f-839a-5f636337d91d"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="60" width="9" height="13" uuid="e53b784d-89ee-4a8c-81ff-e8d39533281a"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="72" width="9" height="13" uuid="771de70f-ac77-4f98-9d1c-2cfab6b1f4e4"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="84" width="9" height="13" uuid="4bbbf489-1ba7-490a-a4af-82fbe0733dad"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="254" y="72" width="149" height="13" uuid="ae3c1b1e-2d55-4373-b072-e4e6969bf246"/>
+				<textFieldExpression><![CDATA[$F{no_of_tests_in_batch}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="36">
+			<subreport isUsingCache="false">
+				<reportElement x="-1" y="0" width="691" height="36" isRemoveLineWhenBlank="true" uuid="daec8b44-8d3f-4559-b4c2-ca65c1d751fc"/>
+				<subreportParameter name="requisition_id">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Tarb_Details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="15">
+			<staticText>
+				<reportElement x="233" y="2" width="9" height="13" uuid="98fddb40-5f50-4fdd-beab-f22e9719eb50"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="2" width="218" height="13" uuid="87c11392-a720-4ff7-858b-2ab46859226c"/>
+				<text><![CDATA[9. Whether TFRB Meeting is  planned                ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="252" y="2" width="256" height="13" uuid="cbd6afb0-3276-420e-9db7-a9d495b6eabf"/>
+				<textFieldExpression><![CDATA[$F{tfrb_details}==true?"Planned":"Not Planned"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="37">
+			<subreport isUsingCache="false">
+				<reportElement x="0" y="0" width="690" height="37" isRemoveLineWhenBlank="true" uuid="d9c3fa84-15cd-4734-9e21-24b00a3e10e7"/>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisition_id">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "Requisition_Tfrb_details.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

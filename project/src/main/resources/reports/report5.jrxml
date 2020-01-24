@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report5" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="811789d9-ac1f-4c65-9ed5-a37a5a42a446">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requisitionId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+r1.id,
+     project_name,test_nomenclature,test_objective,proposed_date_time,
+test_bed_name,no_of_tests_planned,tarb_details,is_ambient
+,
+ concat(truncate(non_ambient_temperature,0),' ',(select value from uom where id=non_ambient_temperature_uom_id)) non_ambient_temperature
+
+
+FROM
+     requisition r1
+left outer  join
+ project_master  pm ON r1.project_master_id = pm.id
+     left outer  join  test_bed_master  tbm ON r1.test_bed_master_id = tbm.id left outer join test_batch tb on(tb.requisition_id=r1.id)
+WHERE
+tb.id  = $P{requisitionId}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_nomenclature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_objective" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proposed_date_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_tests_planned" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarb_details" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="is_ambient" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="non_ambient_temperature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="37" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="95" splitType="Stretch">
+			<textField>
+				<reportElement x="101" y="16" width="447" height="20" uuid="500c3b8c-55ca-4ff5-992f-e09f0aa3058d"/>
+				<textFieldExpression><![CDATA[$F{is_ambient} ==  true?"Conditioned" + "(" +$F{non_ambient_temperature}+ ")": "Ambient" + "(" +$F{non_ambient_temperature}+ ")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="16" width="100" height="20" uuid="c87d1ede-0faa-489e-a1fc-d88ff17343f2"/>
+				<text><![CDATA[TEST CONDITION:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="59" y="36" width="204" height="20" uuid="54ea1949-324b-4742-8ec1-4ff00a076787"/>
+				<textFieldExpression><![CDATA[$F{non_ambient_temperature}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

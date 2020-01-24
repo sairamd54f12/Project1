@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Requisition_Video_DetailsForTarb" pageWidth="610" pageHeight="802" whenNoDataType="NoDataSection" columnWidth="570" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="9b89907e-1d92-4610-bdec-ec7ef1d8fefe">
+	<property name="ireport.zoom" value="1.272292855117455"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="6b8fbcc7-d066-495f-b7e3-3140d055e20b"/>
+	<parameter name="testbatchId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT normal_vid_camera_type,normal_vid_location, concat(normal_vid_frame_rate,' ',(select value from uom where id = normframerate_uom_id_id)) normvidframerate,
+concat(normal_vid_duration,' ',(select value from uom where id =normviddur_uom_id_id )) normvidduration FROM normal_video_sub_details n  where n.test_batch_id = $P{testbatchId}
+union
+ select high_vid_camera_type,high_vid_location,concat(high_vid_frame_rate,' ', (select value from uom where id =highspeedframerate_uom_id_id )) highvidframerate,
+concat(high_vid_duration, ' ',(select value from uom where id = highspeeddur_uom_id_id)) highspeeddur
+ FROM  high_video_sub_details h where  h.test_batch_id = $P{testbatchId}]]>
+	</queryString>
+	<field name="normal_vid_camera_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="normal_vid_location" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="normvidframerate" class="java.lang.String"/>
+	<field name="normvidduration" class="java.lang.String"/>
+	<title>
+		<band height="37">
+			<staticText>
+				<reportElement x="182" y="15" width="160" height="22" uuid="aedc6d91-00bb-432a-86c1-550ddc77671e"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Location]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="15" width="100" height="22" uuid="a4b9ca6f-41d6-4695-b2bf-e7a218b60fbc"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Frame Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="301" height="15" uuid="cad88144-4b60-4949-9c15-685673333ba9"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[16. Video Details                                                    ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="15" width="113" height="22" uuid="b94344b9-3086-4788-89d6-e5bb3bbc3f10"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Duration]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="182" height="22" uuid="589fc12c-f5ec-428c-ada2-7add1506cc8a"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Camera Type]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Immediate">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="442" y="0" width="113" height="20" uuid="56d8616b-d64b-4ca1-ad83-95f7fe8d3d7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{normvidduration}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="342" y="0" width="100" height="20" uuid="765025c4-c24f-4927-9625-2d864c84090b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{normvidframerate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="182" y="0" width="160" height="20" uuid="b0ef9cc4-a07e-45d1-b78f-7a023e46ae33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{normal_vid_location}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="342" y="0" width="100" height="20" uuid="48361673-638a-4aa6-acc3-19b0ef2b49d6"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="0" width="113" height="20" uuid="5dd71697-de29-4799-8ed8-dbdb81049664"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="182" height="20" uuid="ddbfd609-03ab-40be-a124-6c3c101b9cd4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{normal_vid_camera_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="182" y="0" width="160" height="20" uuid="412ee9fa-69d1-44ca-b074-eaf77e9e0ab5"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="182" height="20" uuid="b05834f1-75dd-4652-bd5b-d5c5b85e1f52"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<noData>
+		<band height="15">
+			<staticText>
+				<reportElement x="244" y="0" width="21" height="15" uuid="ccb21505-4a35-49aa-a1b3-e0a531d983af"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="238" height="15" uuid="61c7e094-0643-431a-b5f9-b46b8026ce34"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[16. Video Details                                                    ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="0" width="196" height="15" uuid="4519c28f-6286-4d14-94ca-dd0b1d8e6cc7"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Not Provided]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

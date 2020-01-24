@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_details_readingsReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5126060f-d038-4752-8f40-ea1f3190e9d6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT tpd.tpds_id 'tpd_pk',
+	   tpd.tpds_par_name 'Parameter Name',
+       tpd.peak 'EXP.value',
+	   tpd.value 'Engg.Unit(E/U)',
+       tdr.sensor_no 'SENSOR S.NO',
+       hm.model_name 'Module Name-Sr.No./IA_NO',
+       ia.name 'SC/DAQ',
+       gm.gain_steps Gain,
+       bm.bandwidth_steps as 'Filter(KHz)',
+       sm.system_name 'DAS NAME/TYPE',
+       tdr.adc_channel_no 'Ch No.',
+       rs.das_sr SR,
+	   uu.value,
+        tpd.recording_duration 'Recording',
+       tpd.peak_uom_id 'tpd_uom_id' ,
+       tdr.test_details_id,
+       rs.das_index,
+       tpd.bandwidth 'band_width' ,
+       tpd.bandwidth_uom_id 'band_uom_id',
+       tpd.tpds_pmid 'tpd_pm_id',
+       tpd.tp_pmid 'tpd_pm_id',
+       tpd.tpds_tbi 'tpd_tbid',
+       tpd.tp_tbid 'tpd_tp_tbid',
+       tpd.p_parameter_type 'parameter_type'
+
+FROM   ( SELECT * FROM (SELECT tpds.id 'tpds_id',
+                                         tpds.peak 'peak',
+                                         tpds.parameter_name 'tpds_par_name',
+                                         tpds.peak_uom_id ,
+                                         tpds.bandwidth,
+                                         tpds.bandwidth_uom_id,
+                                         tp.recording_duration ,
+                                         tpds.parameter_master_id 'tpds_pmid',
+                                         tp.parameter_master_id 'tp_pmid',
+                                         tpds.test_batch_id 'tpds_tbi',
+                                         tp.test_batch_id 'tp_tbid',
+                                         p.parameter_name 'p_parameter_type'
+                                  FROM   doi22.test_parameter_detail tpds
+                                  JOIN   test_parameter tp
+                                  JOIN   parameter_master p
+                                  ON     tpds.test_batch_id=tp.test_batch_id
+                                  AND    tpds.parameter_master_id=tp.parameter_master_id
+                                  AND    tp.parameter_master_id=p.id
+                                  where  tpds.test_batch_id=1576) tpdss
+                 LEFT JOIN uom u
+                 ON        tpdss.peak_uom_id=u.id) tpd
+
+
+
+                join test_details_readings tdr
+                join hardware_model hm
+                join ia_no_master ia
+                join gain_master gm
+                join bandwidth_master bm
+                join system_details_master sm
+                join recording_systems rs
+                join uom uu
+                on
+                tdr.test_parameter_detail_id=tpd.tpds_id
+                and
+				tdr.hardware_model_id=hm.id
+                and
+				tdr.ia_no_master_id=ia.id
+                and
+				tdr.gain_master_id=gm.id
+                and
+				tdr.system_details_master_id=sm.id
+                and
+				tdr.recording_systems_id=rs.id
+                and
+				rs.uom_id=uu.id
+
+                group by  tpd.tpds_par_name,sm.system_name,tdr.id]]>
+	</queryString>
+	<field name="tpd_pk" class="java.lang.Long"/>
+	<field name="Parameter Name" class="java.lang.String"/>
+	<field name="EXP.value" class="java.lang.Integer"/>
+	<field name="Engg.Unit(E/U)" class="java.lang.String"/>
+	<field name="SENSOR S.NO" class="java.lang.String"/>
+	<field name="Module Name-Sr.No./IA_NO" class="java.lang.String"/>
+	<field name="SC/DAQ" class="java.lang.String"/>
+	<field name="Gain" class="java.lang.Integer"/>
+	<field name="Filter(KHz)" class="java.lang.Long"/>
+	<field name="DAS NAME/TYPE" class="java.lang.String"/>
+	<field name="Ch No." class="java.lang.Integer"/>
+	<field name="SR" class="java.lang.Float"/>
+	<field name="value" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Recording" class="java.lang.Integer"/>
+	<field name="tpd_uom_id" class="java.lang.Long"/>
+	<field name="test_details_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="das_index" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="band_width" class="java.lang.Integer"/>
+	<field name="band_uom_id" class="java.lang.Long"/>
+	<field name="tpd_pm_id" class="java.lang.Long"/>
+	<field name="tpd_tbid" class="java.lang.Long"/>
+	<field name="tpd_tp_tbid" class="java.lang.Long"/>
+	<field name="parameter_type" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="41" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="50">
+			<staticText>
+				<reportElement x="19" y="23" width="53" height="27" uuid="c1317db0-13bd-4d46-a068-b71838f6fca5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Parameter Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="23" width="30" height="27" uuid="411bb425-8958-4be6-80a8-b7294305287e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[EXP.value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="23" width="44" height="27" uuid="6c75b9e9-99a3-425f-94a4-7eaec312500c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Engg.Unit(E/U)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="25" width="35" height="25" uuid="8c120ac5-876b-487d-845e-5a9bef7ece64"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SENSOR S.NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="611" y="5" width="52" height="40" uuid="61fcd8fe-2145-4cdc-a341-97e6355eb0f6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Module Name-Sr.No./IA_NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="23" width="40" height="20" uuid="55d11d7c-f7ed-4ff9-8dca-fd80813d0c8d"/>
+				<text><![CDATA[Range]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="23" width="47" height="27" uuid="b04d9690-5098-4c52-920e-6adca1b9d0ae"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Lab Sens.(mv/EU)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="16" width="30" height="33" uuid="8c3afd48-1fe4-4b56-86f0-9b2343270915"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Exc(extF)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="391" y="23" width="32" height="20" uuid="422307ac-458a-4329-b200-84818d9f8a84"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ch No.(add field)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="434" y="25" width="24" height="20" uuid="9802d019-15cf-4f57-8093-5b69c06e828c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Gain]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="471" y="23" width="55" height="20" uuid="ac801e9b-53e7-4e73-886b-87aaa6cdeb1c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Filter(KHz)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="539" y="10" width="60" height="35" uuid="ac3bd868-cb68-40e2-a934-3e68f8fee27b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DAS NAME/TYPE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="20" width="47" height="20" uuid="c223bbd2-9dba-45b3-9bfe-724f6844b659"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SC/DAQ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="673" y="10" width="48" height="33" uuid="f967e12e-6132-4a58-867a-00256afc6496"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Adc Ch.No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="736" y="10" width="28" height="29" uuid="1c6c3924-4550-4281-a628-eb084325d604"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sens.(EU/V)]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="18" y="0" width="53" height="15" uuid="4092269b-d7fe-4b07-8407-3172e0ff4089"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Parameter Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="0" width="31" height="15" uuid="9f070635-9372-4d75-ad8e-dc733578551a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXP.value}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="106" y="0" width="44" height="15" uuid="95248f61-38b3-462a-b911-af52f9af0afd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Engg.Unit(E/U)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="158" y="0" width="35" height="20" uuid="5398db11-35e2-4831-9ecd-cb41e49ff75a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SENSOR S.NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="611" y="0" width="52" height="20" uuid="54f1b3f8-709d-431b-9d72-3f9296917afd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Module Name-Sr.No./IA_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="0" width="22" height="20" uuid="d044f1f6-18aa-479a-85e9-34ffd08d8049"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tpd_pm_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="0" width="47" height="20" uuid="8f65a41d-0b5b-4aaa-b808-472bc4e536eb"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tpd_tbid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="0" width="30" height="20" uuid="f12a698c-44d2-4eb0-bcc8-8e93710fc3f0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tpd_tp_tbid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="0" width="22" height="20" uuid="78327277-c892-4474-88c7-40df9ce03a71"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ch No.}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="0" width="23" height="20" uuid="b0110d2a-5e2e-4c90-aa67-5dd77cd96ea2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Gain}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="471" y="0" width="55" height="20" uuid="c2dd5df2-a38a-43f1-800d-447bcd9e348a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Filter(KHz)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="539" y="0" width="60" height="20" uuid="d190c886-ccb4-4075-8d0d-be7dfc210da1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DAS NAME/TYPE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="47" height="20" uuid="2889af7b-ccfc-46c7-b3bd-6a673459db8e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SC/DAQ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="674" y="0" width="52" height="20" uuid="d42f6b63-e40a-4f48-8996-c2d482f910fc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ch No.}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

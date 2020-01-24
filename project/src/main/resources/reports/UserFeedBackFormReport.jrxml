@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UserFeedBackFormReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="3a8297d7-1f07-4356-84f8-b06ea1c5c784">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="testbed" class="java.lang.String"/>
+	<parameter name="project" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM user_feed_back_form ufb ,requisition r,
+            project_master pm,test_bed_master tb
+ where
+            ufb.requisition_id=r.id
+ and        r.project_master_id=pm.id
+ and
+            r.test_bed_master_id=tb.id
+ and        r.year=
+            (case when $P{year}="0" then r.year else $P{year} end)
+ and
+            month(r.requisition_date)=
+            (case when $P{month}="0" then month(r.requisition_date) else $P{month} end)
+ and
+            r.test_bed_master_id=
+            (case when $P{testbed}="0" then r.test_bed_master_id else $P{testbed} end)
+ and        r.project_master_id=
+            (case when $P{project}="0" then r.project_master_id else $P{project} end)]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="comments" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quick_look_data" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parameter_vs_time_plots" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="expanded_plots" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="digital_data_hard_copy" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="performance_analysis" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_in_soft_copy" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_batch_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designation_master" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="division_master" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone_no" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_master_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_tests_planned" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_test_batches" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_master_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarb_details" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="division_reference_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarb_status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="year" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tfrb_details" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_location" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="incharge_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="25" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="25" height="54" uuid="eb9a7ee4-7197-4f0c-be9d-b5d2e438ab65"/>
+				<text><![CDATA[S.no]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="0" width="48" height="54" uuid="183d102c-237b-497a-9a95-c1fab9dac25f"/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="0" width="53" height="54" uuid="ceb51599-a08f-4416-aef2-610d5814263b"/>
+				<text><![CDATA[Designation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="0" width="41" height="54" uuid="914442d9-9f33-4f43-97f2-e661ab4867e7"/>
+				<text><![CDATA[Division]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="0" width="43" height="54" uuid="952609f7-cb88-4c71-aab7-7eb56b2da6bd"/>
+				<text><![CDATA[Phone No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="46" height="54" uuid="b3ead581-691a-4de3-8b23-577d5922c748"/>
+				<text><![CDATA[Requisition]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="256" y="0" width="39" height="54" uuid="1c3fdd20-6c88-439d-a37f-ae3e303ce7de"/>
+				<text><![CDATA[Quick look data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="0" width="41" height="54" uuid="36101cd5-580f-43d0-8ed4-63c0b8c4d512"/>
+				<text><![CDATA[Parameter vs time plots]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="0" width="42" height="54" uuid="4db22311-6b0b-4a56-9952-2590cbd0754e"/>
+				<text><![CDATA[Expanded plots]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="0" width="43" height="54" uuid="690f897a-fe63-4ebe-98a8-6dd123dcb3c7"/>
+				<text><![CDATA[Digital data hard copy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="0" width="46" height="54" uuid="ae634698-8fea-4a9a-8431-66931e8f2648"/>
+				<text><![CDATA[Performance analysis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="0" width="42" height="54" uuid="12671d8f-efdd-490c-a178-cffcbb723f9c"/>
+				<text><![CDATA[Data in soft copy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="509" y="0" width="46" height="54" uuid="8fee4956-f8c4-4973-8af1-70f44e558257"/>
+				<text><![CDATA[comments]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="57" splitType="Stretch">
+			<textField>
+				<reportElement x="25" y="0" width="48" height="57" uuid="63b01e05-6103-4dcb-8083-3b2a0af9beb6"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="0" width="53" height="57" uuid="300f7335-db64-4eac-ba65-6736ec77815f"/>
+				<textFieldExpression><![CDATA[$F{designation_master}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="0" width="41" height="57" uuid="44a447b8-69e2-4ec8-b117-92b272029068"/>
+				<textFieldExpression><![CDATA[$F{division_master}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="167" y="0" width="43" height="57" uuid="a38b1097-ca21-47be-a7bd-def83d4bb3d6"/>
+				<textFieldExpression><![CDATA[$F{phone_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="46" height="57" uuid="bfe8b8c8-a4ec-43b1-b470-4b44cf294f48"/>
+				<textFieldExpression><![CDATA[$F{requisition_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="256" y="0" width="39" height="57" uuid="2e2a5594-7996-4ff1-8d97-d3275037f0d6"/>
+				<textFieldExpression><![CDATA[$F{quick_look_data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="0" width="41" height="57" uuid="8d3f9eea-75b3-4300-8f18-d9d3c6bd9762"/>
+				<textFieldExpression><![CDATA[$F{parameter_vs_time_plots}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="0" width="42" height="57" uuid="b2b2a4b5-a0cd-4f11-8b63-3c7594f3714c"/>
+				<textFieldExpression><![CDATA[$F{expanded_plots}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="0" width="43" height="57" uuid="efd897a3-e813-4e7c-ad1e-9438971474b5"/>
+				<textFieldExpression><![CDATA[$F{digital_data_hard_copy}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="0" width="46" height="57" uuid="71533669-cb93-4f1f-9d62-950988e28533"/>
+				<textFieldExpression><![CDATA[$F{performance_analysis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="467" y="0" width="42" height="57" uuid="fe85676a-f331-4e6b-81d8-71e3de15646d"/>
+				<textFieldExpression><![CDATA[$F{data_in_soft_copy}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="509" y="0" width="46" height="57" uuid="72c3bdd6-cb3b-4ab5-a796-e265bd4b2c92"/>
+				<textFieldExpression><![CDATA[$F{comments}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="31" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

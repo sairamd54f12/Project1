@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MeasurementPlanReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5387237-2ec2-4dda-8b1e-fed9b42e1e2a">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="requisitionId" class="java.lang.String"/>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<parameter name="SubReportPath" class="java.lang.String"/>
+	<parameter name="userSession" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select req.id requisitionId,tb.id testBatchId,tb.requisition_id,tm.test_bed_name,req.requisition_no,tb.test_nomenclature,pm.project_name,
+req.requisition_date,tb.proposed_date_time,imp.measurement_plan_no,imp.no_of_systems_used,tb.is_ambient,
+case when concat(truncate(tb.non_ambient_temperature,0),' ',(select value from uom where id=tb.non_ambient_temperature_uom_id)) is null then "Not Provided" else concat(truncate(tb.non_ambient_temperature,0),' ',(select value from uom where id=tb.non_ambient_temperature_uom_id)) end as non_ambient_temperature
+,
+tm.incharge_name,tm.designation,utm.team_member_name,dm.description,utm.role_name
+from requisition req,test_batch tb,project_master pm,instrumentation_measurement_plan imp,test_bed_master tm,user_trial_team_details utm,
+designation_master dm
+where req.id = tb.requisition_id and pm.id = req.project_master_id and req.id =  $P{requisitionId} and req.test_bed_master_id = tm.id and utm.test_batch_id= $P{testBatchId} and
+imp.id = (select id from instrumentation_measurement_plan where test_batch_id =  $P{testBatchId} and requisition_id= $P{requisitionId}) and tb.id =  $P{testBatchId}
+and dm.id = utm.designation_master_id and utm.role_name = 'Controller']]>
+	</queryString>
+	<field name="requisitionId" class="java.lang.Long"/>
+	<field name="testBatchId" class="java.lang.Long"/>
+	<field name="requisition_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_bed_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_nomenclature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proposed_date_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="measurement_plan_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_of_systems_used" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="is_ambient" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="non_ambient_temperature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="incharge_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="team_member_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="role_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="274" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="62" width="524" height="20" uuid="aefa630d-b7da-41cb-b801-b6714ccf2836"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[INSTRUMENTATION MEASUREMENT PLAN FOR STATIC TEST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="118" width="133" height="20" uuid="00ed83ca-eb23-4db4-80f1-b498b878c6ae"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[REQUISITION SL.NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="197" width="134" height="16" uuid="f57c0a1b-a53f-49e5-becb-21f03a4a4641"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[PROPOSED TEST DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="150" width="107" height="15" uuid="3fea5ba7-ef69-4dc8-a874-ba25e2b4e97d"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[TEST BED]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="418" y="150" width="114" height="15" uuid="bac74530-cdb9-4f88-a8af-a4ee64ac20ce"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{test_bed_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="146" width="125" height="19" uuid="fa49db81-4817-4358-b15b-81ac8e3d2ffd"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="146" width="133" height="19" uuid="bfa21fc6-375b-4b13-91ee-899a19eab915"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[PROJECT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="172" width="372" height="19" uuid="d4dc5081-5c95-40dc-a560-4f0cd709375e"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{test_nomenclature}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="170" width="134" height="19" uuid="dd9c75f7-323b-4997-b629-166267b2081d"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[TEST NAME]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="118" width="125" height="20" uuid="9aad867a-833c-40ec-8544-a54d0c5fb675"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{requisition_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="87" width="133" height="21" uuid="633035a2-e96c-4324-830f-6d297a553d6a"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[MEASUREMENT PLAN NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="220" width="134" height="18" uuid="e08fa4dc-80f3-447f-82db-53d315b5ae13"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[TEST CONDITION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="118" width="107" height="20" uuid="cef0cb4b-3dbb-4ef2-8e5a-fc7644c96661"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[REQUISITION DATE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="220" width="372" height="18" uuid="5645892c-e628-4256-9d6f-f7939d3ba603"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{is_ambient}==true?"Conditioned("+$F{non_ambient_temperature}+")":"Ambient"+"("+$F{non_ambient_temperature}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="118" width="116" height="20" uuid="a7e5e72b-7370-448b-8f4e-c53c7371ed5c"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{requisition_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="196" width="125" height="16" uuid="262f6555-ef5b-440c-b195-41e929fef933"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proposed_date_time}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="247" width="134" height="18" uuid="5d394a62-de36-4946-852c-a49708a18256"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[NO OF DAS USED]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="247" width="97" height="18" uuid="b060e7f3-d907-4dd6-90e9-8df246d031ea"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_of_systems_used}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="87" width="132" height="21" uuid="4565a1ba-bb26-4eea-8200-0b9d393f39c3"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{measurement_plan_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="336" y="0" width="139" height="18" uuid="cb3aeefa-d21c-4834-8d20-05f7a98739fd"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[FORMAT NO:   DOI/F-04]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="19" width="139" height="15" uuid="dd86bb67-60db-4ed7-af70-c264e5680aae"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[REV.NO: 00 DT 29/02/2012]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="336" y="35" width="139" height="20" uuid="c90b0ac1-a39e-4030-8f0a-e53bdd059357"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="404" y="35" width="29" height="20" uuid="b4327b77-a44d-4d35-904b-0ba03478ecd7"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-103" y="-25" width="9" height="13" uuid="0cf99bd4-f597-407e-b70d-3daabb69da86"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="118" width="7" height="20" uuid="33496be4-5ee4-4e14-a0fb-be7937d378a8"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-197" y="93" width="9" height="20" uuid="f00d61c4-1711-40ef-8187-191142eb6e35"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="249" width="100" height="20" uuid="876e806c-4c50-4941-b30c-d51a8cea468e"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="146" width="7" height="19" uuid="83414244-5bf0-489b-bc6c-b8134b453e9c"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="170" width="7" height="20" uuid="846a09a8-1675-4a59-940c-8c02e71aef50"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="192" width="7" height="20" uuid="132c876e-fda9-4a4c-940c-76bbfff7f886"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="220" width="7" height="20" uuid="4b46c21c-da23-45f6-80cf-7d10190a1299"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="242" width="7" height="20" uuid="66ba9091-404e-4434-b2b7-a82d1389fec0"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="118" width="14" height="20" uuid="4f49f4f1-360b-4c87-b7e3-2b67fcfe2837"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="150" width="14" height="15" uuid="b0c38f5b-a57f-49ad-bf02-07221dc6b4c3"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="87" width="7" height="20" uuid="4b71b229-8278-45ca-a973-7150da8015c5"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<subreport>
+				<reportElement x="1" y="0" width="554" height="35" uuid="c2f6254a-0537-4897-9530-2844f994ed4f"/>
+				<subreportParameter name="userSession">
+					<subreportParameterExpression><![CDATA[$P{userSession}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SubReportPath">
+					<subreportParameterExpression><![CDATA[$P{SubReportPath}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="testBatchId">
+					<subreportParameterExpression><![CDATA[$P{testBatchId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requisitionId">
+					<subreportParameterExpression><![CDATA[$P{requisitionId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SubReportPath} + "MeasurementPlanRepost_D3_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="-103" y="-25" width="9" height="13" uuid="9aad3e1e-382e-495d-a128-9a57e26de5b6"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="98">
+			<staticText>
+				<reportElement x="0" y="0" width="101" height="20" uuid="682c0581-79f7-46fe-9944-6fd2aeb4ce37"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[USER'S SIGNATURE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="0" width="131" height="20" uuid="f4d42b6e-f41a-4425-aca7-6a58b044e54e"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[SIGNATURE OF DOI REP:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="100" height="20" uuid="0dd064b1-1a93-432c-be8b-b6272739094e"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="53" width="100" height="20" uuid="d68fa217-8a61-48cd-9366-0af2121392c6"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[DESIGNATION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="26" width="100" height="20" uuid="eac7ea10-4d8c-406e-9aee-2585bf5de5f7"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[NAME:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="53" width="100" height="20" uuid="879936b7-b898-4c39-8623-f5a79bf0dc71"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[DESIGNATION]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="429" y="26" width="100" height="20" uuid="2caafc74-8ecf-4764-9f25-54c95b359041"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{incharge_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="53" width="100" height="20" uuid="89ee0377-252d-4268-ba81-bbd0ba29d61e"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="26" width="103" height="20" uuid="34334738-c826-4772-96b9-6f500a3dab8d"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{team_member_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="53" width="103" height="20" uuid="2910aad9-9658-4e86-b94d-018b7a5620cc"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="101" y="26" width="10" height="20" uuid="506deaaf-03fb-421a-99b6-0621ebfa33c2"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="53" width="10" height="20" uuid="532d2d19-d8bb-4f9d-8fab-9bdf29ea48eb"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="103"/>
+	</summary>
+</jasperReport>

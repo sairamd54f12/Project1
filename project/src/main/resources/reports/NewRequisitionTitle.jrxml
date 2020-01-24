@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NewRequisitionTitle" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="de1acf89-9738-4b3f-bf30-f7ab3056ba8d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="29">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="28" uuid="60724561-292e-415b-bade-291ad68d45ea"/>
+				<text><![CDATA[1. * For clarification please contact test controller of DOI                                                                                                                     2. Ensure that all relevant columns are filled properly]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

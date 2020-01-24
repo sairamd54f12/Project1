@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test_details_readingsReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5126060f-d038-4752-8f40-ea1f3190e9d6">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+ @rank:=@rank+1  AS r,
+
+t.tpd_pk1 ' tpd_pk',
+t.ranges_1 'range',
+t.test_plan_no_1 'test_plan_no',
+t.test_date_1 'test_date',
+t.Parameter_Name1 'Parameter Name',
+t.EXP_value1 'EXP.value' ,
+t.Engg_Unit_1 'Engg.Unit(E/U)',
+t.SENSOR_SNO_1 'SENSOR S.NO',
+t.exc_name_1 'Exc',
+t.lab_sense_1 'lab_sense',
+t.sensitivity_1 'sensitivity',
+t.Module_Name_IA_NO 'Module Name-Sr.No./IA_NO',
+t.SC_DAQ_1 'SC/DAQ',
+t.Gain1 Gain,
+t.Filter_KHz_1 'Filter(KHz)',
+t.DAS_NAME_TYPE_1 'DAS NAME/TYPE',
+t.Ch_No_1 'Ch No.',
+t.SR1 SR,
+t.uv_1 value,
+t.Recording_1 'Recording',
+t.test_nomenclature_1 'test_name',
+t.re_requisition_no_1   'requisition_no',
+t.pm_project_name_1      'project_name',
+t.imp_measurement_plan_no_1  'measurement_plan_no',
+t.das_cnf_1 'das_cnf'
+from
+(SELECT
+
+		td.test_plan_no 'test_plan_no_1',
+		tpd.tpds_id 'tpd_pk1',
+	   tpd.tpds_par_name 'Parameter_Name1',
+       tpd.peak 'EXP_value1',
+	   tpd.value 'Engg_Unit_1',
+       tdr.sensor_no 'SENSOR_SNO_1',
+  td.test_date 'test_date_1',
+       tdr.range_max 'ranges_1',
+       tdr.lab_sense 'lab_sense_1',
+       tdr.engg_conv 'sensitivity_1',
+       exc.name 'exc_name_1',
+       hm.model_name 'Module_Name_IA_NO',
+       ia.name 'SC_DAQ_1',
+       gm.gain_steps Gain1,
+       bm.bandwidth_steps as 'Filter_KHz_1',
+       sm.system_name 'DAS_NAME_TYPE_1',
+       d.id 'das_cnf_1',
+       tdr.adc_channel_no 'Ch_No_1',
+       rs.das_sr SR1,
+	   uu.value uv_1,
+        tpd.recording_duration 'Recording_1',
+       tpd.peak_uom_id 'tpd_uom_id' ,
+       tdr.test_details_id,
+       rs.das_index,
+       tpd.bandwidth 'band_width' ,
+       tpd.bandwidth_uom_id 'band_uom_id',
+       tpd.tpds_pmid 'tpd_pm_id',
+       tpd.tp_pmid 'tpd_pm_id1',
+       tpd.tpds_tbi 'tpd_tbid',
+       tpd.tp_tbid 'tpd_tp_tbid',
+       tpd.p_parameter_type 'parameter_type',
+       tpd.tb_test_nomenclature 'test_nomenclature_1',
+       tpd.re_requisition_no    're_requisition_no_1',
+       tpd.pm_project_name      'pm_project_name_1',
+       tpd.imp_measurement_plan_no  'imp_measurement_plan_no_1'
+
+FROM    ( SELECT * FROM (SELECT tpds.id 'tpds_id',
+                                         tpds.peak 'peak',
+                                         tpds.parameter_name 'tpds_par_name',
+                                         tpds.peak_uom_id ,
+                                         tpds.bandwidth,
+                                         tpds.bandwidth_uom_id,
+                                         tp.recording_duration ,
+                                         tpds.parameter_master_id 'tpds_pmid',
+                                         tp.parameter_master_id 'tp_pmid',
+                                         tpds.test_batch_id 'tpds_tbi',
+                                         tp.test_batch_id 'tp_tbid',
+                                         p.parameter_name 'p_parameter_type',
+                                         tb.test_nomenclature 'tb_test_nomenclature',
+                                         re.requisition_no 're_requisition_no',
+                                          pm.project_name 'pm_project_name',
+                                          imp.measurement_plan_no 'imp_measurement_plan_no'
+                                  FROM   test_parameter_detail tpds
+                                  JOIN   test_parameter tp
+                                  JOIN   parameter_master p
+                                  join   test_batch  tb
+                                  join   requisition re
+                                  join   project_master pm
+                                  join   instrumentation_measurement_plan imp
+
+                                  ON     tpds.test_batch_id=tp.test_batch_id
+                                  AND    tpds.parameter_master_id=tp.parameter_master_id
+                                  AND    tp.parameter_master_id=p.id
+                                  and    re.id=tb.requisition_id
+                                  and    pm.id=re.project_master_id
+
+ 			   and    tb.id=$P{testBatchId}
+                                  and    imp.test_batch_id=$P{testBatchId}
+                                  where  tpds.test_batch_id=$P{testBatchId}) tpdss
+                 LEFT JOIN uom u
+                 ON        tpdss.peak_uom_id=u.id) tpd
+
+                join test_details_readings tdr
+                join hardware_model hm
+                join ia_no_master ia
+                join gain_master gm
+                join bandwidth_master bm
+                join system_details_master sm
+                join recording_systems rs
+                join uom uu
+                join excitation_master exc
+                join test_details td
+				join 	 das_configuration d
+                on
+                tdr.test_parameter_detail_id=tpd.tpds_id
+                and
+				tdr.hardware_model_id=hm.id
+                and
+				tdr.ia_no_master_id=ia.id
+                and
+				tdr.gain_master_id=gm.id
+                and
+                                         tdr.bandwidth_master_id=bm.id
+                and
+				tdr.system_details_master_id=sm.id
+                and
+				tdr.recording_systems_id=rs.id
+                and
+				rs.uom_id=uu.id
+                and
+                tdr.excitation_master_id=exc.id
+                and
+                tdr.test_details_id=td.id
+                and
+                sm.das_configuration_id=d.id
+                group by  tpd.tpds_par_name,sm.system_name,tdr.id) t
+
+                CROSS JOIN (SELECT @rank:= 0) r order by tpd_pk,das_cnf]]>
+	</queryString>
+	<field name="r" class="java.lang.Double"/>
+	<field name="tpd_pk" class="java.lang.Long"/>
+	<field name="range" class="java.lang.Long"/>
+	<field name="test_plan_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Parameter Name" class="java.lang.String"/>
+	<field name="EXP.value" class="java.lang.Integer"/>
+	<field name="Engg.Unit(E/U)" class="java.lang.String"/>
+	<field name="SENSOR S.NO" class="java.lang.String"/>
+	<field name="Exc" class="java.lang.String"/>
+	<field name="lab_sense" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sensitivity" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Module Name-Sr.No./IA_NO" class="java.lang.String"/>
+	<field name="SC/DAQ" class="java.lang.String"/>
+	<field name="Gain" class="java.lang.Integer"/>
+	<field name="Filter(KHz)" class="java.lang.Long"/>
+	<field name="DAS NAME/TYPE" class="java.lang.String"/>
+	<field name="Ch No." class="java.lang.Integer"/>
+	<field name="SR" class="java.lang.Float"/>
+	<field name="value" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Recording" class="java.lang.Integer"/>
+	<field name="test_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="measurement_plan_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="das_cnf" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="178">
+			<staticText>
+				<reportElement x="26" y="146" width="50" height="23" uuid="c1317db0-13bd-4d46-a068-b71838f6fca5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Parameter Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="146" width="30" height="23" uuid="411bb425-8958-4be6-80a8-b7294305287e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[EXP.value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="146" width="33" height="23" uuid="6c75b9e9-99a3-425f-94a4-7eaec312500c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Engg.Unit(EU)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="146" width="38" height="23" uuid="8c120ac5-876b-487d-845e-5a9bef7ece64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[  Sensor   S.No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="571" y="146" width="52" height="23" uuid="61fcd8fe-2145-4cdc-a341-97e6355eb0f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DAQ Module]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="146" width="32" height="23" uuid="55d11d7c-f7ed-4ff9-8dca-fd80813d0c8d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Range]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="143" width="33" height="33" uuid="b04d9690-5098-4c52-920e-6adca1b9d0ae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Lab_Sen(mV/EU)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="146" width="32" height="23" uuid="422307ac-458a-4329-b200-84818d9f8a84"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ch_No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="146" width="24" height="23" uuid="9802d019-15cf-4f57-8093-5b69c06e828c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Gain]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="146" width="40" height="23" uuid="ac801e9b-53e7-4e73-886b-87aaa6cdeb1c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Filter(Hz)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="507" y="146" width="54" height="23" uuid="ac3bd868-cb68-40e2-a934-3e68f8fee27b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DAS Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="335" y="146" width="47" height="23" uuid="c223bbd2-9dba-45b3-9bfe-724f6844b659"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[S/C Module]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="624" y="146" width="29" height="23" uuid="f967e12e-6132-4a58-867a-00256afc6496"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ Ch_No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="653" y="146" width="35" height="23" uuid="1c6c3924-4550-4281-a628-eb084325d604"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Engg. Conv.(EU/V)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="697" y="146" width="35" height="23" uuid="aa9addf1-e00e-4c98-856d-86cd1befa5d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sampling Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="742" y="146" width="50" height="23" uuid="e6edd99f-e68f-4440-8089-e3656c32e19d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Recording Time(s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="146" width="21" height="23" uuid="580f73b1-f725-4788-8021-0f8c233fb815"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[S.No]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="702" y="33" width="18" height="18" uuid="6180cfe4-642b-4b66-be9e-48808287847c"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="687" y="0" width="9" height="17" uuid="4a3c569b-f5b0-4408-9cb3-6b9890bc7159"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="624" y="0" width="60" height="17" uuid="67c71a4c-904a-449f-82c5-09a0895502ab"/>
+				<text><![CDATA[FORMAT NO     ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="624" y="17" width="60" height="17" uuid="5c5bb86c-426c-4052-81a8-227389a1f9a9"/>
+				<text><![CDATA[REV. NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="687" y="34" width="9" height="19" uuid="ac61ce80-2098-4fba-a82c-7a879ff52a90"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="696" y="0" width="95" height="17" uuid="aecbb535-0315-4550-89c1-eaf8b8c2099e"/>
+				<text><![CDATA[DOI/F-05]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="696" y="17" width="95" height="17" uuid="666aa576-dbb4-4a45-a6b5-a2afe32870d1"/>
+				<text><![CDATA[00 Dt.29-02-2012]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="724" y="33" width="29" height="18" uuid="0b62e40c-692c-408b-90c7-c28d8723057b"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="624" y="34" width="48" height="17" uuid="de354cac-ebf9-48f9-bf07-a0c0ea176964"/>
+				<textFieldExpression><![CDATA["Page "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="687" y="17" width="9" height="17" uuid="5663d436-3b19-4ef7-9114-ea0089dad2b3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="166" y="138" width="625" height="1" uuid="eb6b352f-ab56-4986-8215-461fdac555b5"/>
+			</line>
+			<staticText>
+				<reportElement x="166" y="108" width="121" height="20" uuid="5c017d0a-cee4-4bbe-8dbd-780f6fe82e95"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[TRANSDUCER DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="108" width="200" height="20" uuid="241caad1-24a8-4d05-bd31-5bd0ab2adfb6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SIGNAL CONDITIONER DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="552" y="108" width="162" height="20" uuid="654c5a2c-d471-452c-ad78-840baaa8741b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RECORDING SYSTEM DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-407" y="134" width="32" height="23" uuid="76135272-b1ba-4312-bed1-9819ab9be4dd"/>
+				<text><![CDATA[Range]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="146" width="27" height="23" uuid="25e7485d-4601-469e-b13a-41eb060d1014"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[  Exc.  (V)]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="208" y="132" width="1" height="45" forecolor="#000000" backcolor="#FFFFFF" uuid="3d681679-a972-4835-b74f-d1ddf80c12d7"/>
+				<graphicElement fill="Solid"/>
+			</line>
+			<line>
+				<reportElement x="250" y="137" width="1" height="40" uuid="f2ac056d-5afb-44b4-8c3a-fdd3d33237a6"/>
+			</line>
+			<line>
+				<reportElement x="3" y="97" width="788" height="1" uuid="d9165356-042d-4e2b-979b-6d7bf08cbaa9"/>
+			</line>
+			<line>
+				<reportElement x="4" y="176" width="787" height="1" uuid="d206b602-f77f-4aa4-91ed-04ad384bb694"/>
+			</line>
+			<staticText>
+				<reportElement x="331" y="0" width="165" height="17" uuid="64e223c8-cda2-42af-93e2-a8bb4c3588d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TEST PLAN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="77" y="69" width="84" height="20" uuid="45e3753f-4cb8-4377-a516-68371314e347"/>
+				<textFieldExpression><![CDATA[$F{test_plan_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="69" width="64" height="20" uuid="99ca3f95-e1c8-4402-a6bc-d870fd500451"/>
+				<text><![CDATA[Test Plan No.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="251" y="69" width="80" height="20" uuid="4642afc3-bfd8-47de-b1e8-a46ed22550b6"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="182" y="69" width="68" height="20" uuid="1ec8864b-225f-48ca-b6ea-6abd0c75d64b"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Project Name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="708" y="71" width="67" height="18" uuid="5d1239fd-2022-403b-8fed-c3a7638aa73e"/>
+				<textFieldExpression><![CDATA[$F{test_date}.toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="655" y="71" width="51" height="18" uuid="dee42cf8-accf-4c1c-a10e-ae35af32ee55"/>
+				<text><![CDATA[Test Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="410" y="69" width="223" height="20" uuid="ce76e3df-805d-4ef5-b5d7-2c2bbe477c3e"/>
+				<textFieldExpression><![CDATA[$F{test_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="69" width="60" height="20" uuid="24e45fd7-b6bf-4383-bb35-a06ef6013a89"/>
+				<text><![CDATA[Test Name :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="506" y="98" width="1" height="78" uuid="c367028a-1a01-48fe-b888-a735ae82ed6d"/>
+			</line>
+			<staticText>
+				<reportElement x="13" y="34" width="76" height="20" uuid="56afed58-fe3e-480c-9cd1-14beb0a81fc1"/>
+				<text><![CDATA[Requisition No:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="92" y="34" width="100" height="20" uuid="622d3fd1-e6b6-4b8f-b297-d6edf71c929c"/>
+				<textFieldExpression><![CDATA[$F{requisition_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="34" width="100" height="20" uuid="ad2dfd22-a78f-40b9-a548-07f332be1d34"/>
+				<textFieldExpression><![CDATA[$F{measurement_plan_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="213" y="34" width="106" height="20" uuid="17aee0f1-1f79-4dd4-bde9-3207ff05bc0d"/>
+				<text><![CDATA[Measurement Plan No:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="27" y="23" width="62" height="18" isRemoveLineWhenBlank="true" uuid="4092269b-d7fe-4b07-8407-3172e0ff4089"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Parameter Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="23" width="30" height="18" uuid="9f070635-9372-4d75-ad8e-dc733578551a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXP.value}==null?"-":$F{EXP.value}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="22" width="27" height="15" uuid="95248f61-38b3-462a-b911-af52f9af0afd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Engg.Unit(E/U)}==null?"-":$F{Engg.Unit(E/U)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="22" width="38" height="15" uuid="5398db11-35e2-4831-9ecd-cb41e49ff75a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SENSOR S.NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="22" width="22" height="15" uuid="78327277-c892-4474-88c7-40df9ce03a71"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ch No.}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="22" width="23" height="15" uuid="b0110d2a-5e2e-4c90-aa67-5dd77cd96ea2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Gain}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="22" width="40" height="15" uuid="c2dd5df2-a38a-43f1-800d-447bcd9e348a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Filter(KHz)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="335" y="22" width="42" height="15" uuid="2889af7b-ccfc-46c7-b3bd-6a673459db8e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SC/DAQ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="633" y="22" width="20" height="15" uuid="d42f6b63-e40a-4f48-8996-c2d482f910fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ch No.}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="694" y="22" width="13" height="15" uuid="abdfc335-4dde-483c-af24-da02ca01b16c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="706" y="22" width="30" height="15" uuid="23dd26fe-bb3d-4420-93ff-905f90fe41dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="743" y="22" width="48" height="15" uuid="cc6c5c58-23b7-43b6-a914-d0a6cf57c57a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Recording}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="164" y="-80" width="1" height="120" uuid="5f5e23e2-f01f-4e6a-8bd1-509585f3413d"/>
+			</line>
+			<line>
+				<reportElement x="208" y="-9" width="1" height="50" uuid="a4ac0fb4-3676-46b1-91ee-51410c2c0446"/>
+			</line>
+			<line>
+				<reportElement x="250" y="-9" width="1" height="50" uuid="b4b25fab-3516-48ef-b7dd-7874f764d0b8"/>
+			</line>
+			<line>
+				<reportElement x="419" y="-40" width="1" height="81" uuid="f54859ff-30ef-43da-b569-1a6a4fadee2e"/>
+			</line>
+			<line>
+				<reportElement x="451" y="-39" width="1" height="81" uuid="431e17c7-1a43-4dbe-b244-bcca3b55fe61"/>
+			</line>
+			<line>
+				<reportElement x="623" y="-40" width="1" height="82" uuid="1bd2dc8e-10ea-467c-9231-11de7c38c0d3"/>
+			</line>
+			<line>
+				<reportElement x="653" y="-39" width="1" height="80" uuid="1712721a-81ff-4c54-84a5-eb6b7a4e277f"/>
+			</line>
+			<line>
+				<reportElement x="687" y="-39" width="1" height="81" uuid="4c632635-184a-4bc1-9466-cc96f5b5ac83"/>
+			</line>
+			<line>
+				<reportElement x="742" y="-40" width="1" height="81" uuid="579ce4b0-c9ed-413a-8678-52b79f4d7c69"/>
+			</line>
+			<line>
+				<reportElement x="791" y="-80" width="1" height="121" uuid="a0de03fb-fef5-4d89-9927-9bed578384a1"/>
+			</line>
+			<line>
+				<reportElement x="319" y="-39" width="1" height="80" uuid="8d1c7cae-a75f-46a6-8100-d0b8f4a46b33"/>
+			</line>
+			<line>
+				<reportElement x="287" y="-80" width="1" height="121" uuid="0c711908-8881-456c-972f-ccce35ae7597"/>
+			</line>
+			<line>
+				<reportElement x="384" y="-39" width="1" height="81" uuid="702a2135-37f2-476d-aba0-031b6e5614a3"/>
+			</line>
+			<line>
+				<reportElement x="26" y="-80" width="1" height="121" uuid="08fcbf1b-fac1-4fc8-9d6e-4427f76050ce"/>
+			</line>
+			<line>
+				<reportElement x="3" y="-80" width="1" height="121" uuid="76c8227c-9f93-4463-ad2f-f5e192d583c0"/>
+			</line>
+			<line>
+				<reportElement x="93" y="-80" width="1" height="121" uuid="3827bf1a-1bcd-4073-97d8-1006db3a5155"/>
+			</line>
+			<line>
+				<reportElement x="4" y="40" width="787" height="1" uuid="d024874b-2842-4de1-81d6-1e3d6d556b7b"/>
+			</line>
+			<line>
+				<reportElement x="122" y="-80" width="1" height="120" uuid="47acb545-5b4f-471d-b39f-2ad14081931d"/>
+			</line>
+			<textField pattern="###0">
+				<reportElement isPrintRepeatedValues="false" x="4" y="22" width="16" height="15" uuid="3a855dad-756c-42aa-96b8-70946e710bfa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{r}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="22" width="21" height="16" uuid="caec3ce8-a358-4816-a3ab-10022c6230d6"/>
+				<textFieldExpression><![CDATA[$F{Exc}==null?"-":$F{Exc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="22" width="29" height="20" uuid="c2854a38-5dd7-4317-9b91-de5e044975f8"/>
+				<textFieldExpression><![CDATA[$F{lab_sense}==null?"-":$F{lab_sense}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="24" width="26" height="17" uuid="18ad1bb6-f8af-4baf-a522-cfa5880a3e66"/>
+				<textFieldExpression><![CDATA[$F{range}==null?"-":$F{range}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="658" y="23" width="25" height="20" uuid="a7b122db-59e1-4308-bf4f-bf1fce596a14"/>
+				<textFieldExpression><![CDATA[$F{sensitivity}==null?"-":$F{sensitivity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="22" width="54" height="15" uuid="d190c886-ccb4-4075-8d0d-be7dfc210da1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DAS NAME/TYPE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="571" y="22" width="52" height="15" uuid="54f1b3f8-709d-431b-9d72-3f9296917afd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Module Name-Sr.No./IA_NO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="506" y="-9" width="1" height="49" uuid="930df61a-3b7a-4e12-a448-86e27bd748f1"/>
+			</line>
+			<line>
+				<reportElement x="564" y="-40" width="1" height="80" uuid="945ffb43-b8e1-450d-a2ec-4f8372202ceb"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

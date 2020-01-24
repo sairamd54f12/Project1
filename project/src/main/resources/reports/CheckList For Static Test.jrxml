@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CheckList For Static Test" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a0ac78c-c45c-4002-96f0-1a243c497e79">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requisitionId" class="java.lang.String"/>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select req.project_master_id,pm.project_name,td.test_date,tb.test_nomenclature,td.test_plan_no,req.requisition_no,req.requisition_date
+from requisition req,project_master pm,test_batch tb,test_details td
+where req.project_master_id = pm.id and req.id = tb.requisition_id and tb.id = $P{testBatchId} and req.id = $P{requisitionId} and
+td.id = (SELECT id FROM test_details where instrumentation_measurement_plan_id =
+(SELECT id FROM instrumentation_measurement_plan where test_batch_id = $P{testBatchId} and requisition_id = $P{requisitionId}))]]>
+	</queryString>
+	<field name="project_master_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="project_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_nomenclature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="test_plan_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisition_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="167" splitType="Immediate">
+			<staticText>
+				<reportElement x="592" y="0" width="154" height="20" uuid="e0a1dee2-03d5-4d51-bb15-bb9cf1213ae0"/>
+				<text><![CDATA[FORMAT NO: DOI/F-05]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="592" y="23" width="154" height="20" uuid="ee7a6aac-d112-411a-9556-00147637f48d"/>
+				<text><![CDATA[REV.NO.00: DT.29.02.2015]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="593" y="47" width="99" height="20" uuid="120e06e9-cfbe-4dd0-9dba-1395c834fb1e"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="650" y="47" width="42" height="20" uuid="a690b130-b162-4520-9c14-8d220c5dff76"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="74" width="112" height="20" uuid="37f15a49-fc0a-49b5-a61c-ea345ec3e717"/>
+				<text><![CDATA[PROJECT NAME:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="174" y="74" width="100" height="20" uuid="b65dae30-074c-4f70-8f8d-f083cc76b777"/>
+				<textFieldExpression><![CDATA[$F{project_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="110" width="112" height="20" uuid="1f38cb4c-2f93-4dfb-aee3-1936047ea7a3"/>
+				<text><![CDATA[REQUISITION SL.NO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="174" y="110" width="100" height="20" uuid="5f8d6f20-1fda-4689-b399-2e0069e52219"/>
+				<textFieldExpression><![CDATA[$F{requisition_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="146" width="112" height="20" uuid="1d56e364-2c64-48fc-9a8d-3e81e4dd5dda"/>
+				<text><![CDATA[TEST DATE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="174" y="146" width="100" height="20" uuid="72ec62a0-323b-4dfd-bdb6-c0425f392cc5"/>
+				<textFieldExpression><![CDATA[$F{test_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="328" y="74" width="100" height="20" uuid="12ae8a1f-bf3c-43cc-b522-20cd2cb6effc"/>
+				<text><![CDATA[TEST NAME:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="470" y="74" width="112" height="20" uuid="8012eeab-c256-4a16-8656-9fae86afc43c"/>
+				<textFieldExpression><![CDATA[$F{test_nomenclature}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="328" y="110" width="100" height="20" uuid="e9442a65-f904-42fd-8d0e-284b0ad0f02a"/>
+				<text><![CDATA[TEST PLAN NO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="470" y="110" width="112" height="20" uuid="eee994a7-304f-4909-9d1a-a7405570722a"/>
+				<textFieldExpression><![CDATA[$F{test_plan_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="44" splitType="Stretch"/>
+	</detail>
+	<lastPageFooter>
+		<band height="58">
+			<staticText>
+				<reportElement x="7" y="35" width="100" height="20" uuid="3704df0f-79e6-4a3b-bd9e-c511528160b6"/>
+				<text><![CDATA[DATE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="4" width="100" height="20" uuid="b14fff68-0c64-404b-be64-ef9de2a26e9b"/>
+				<text><![CDATA[CHECKED BY:]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

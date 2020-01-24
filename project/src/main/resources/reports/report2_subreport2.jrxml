@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2_subreport2" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ed8be05-87af-4595-96cd-9b6eed5969b6">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="225"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requisitionId" class="java.lang.String"/>
+	<parameter name="testBatchId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT rec.id,mpd.id,parameter_name parameters,requirement,provided,das_ch,das_sr,measurement_plan_details_id FROM
+recording_systems rec LEFT JOIN measurement_plan_details mpd
+ON rec.measurement_plan_details_id = mpd.id INNER JOIN parameter_master pm  ON mpd.parameter_master_id = pm.id where mpd.instrumentation_measurement_plan_id =(select id from
+instrumentation_measurement_plan
+where test_batch_id= $P{testBatchId} and requisition_id = $P{requisitionId}) ORDER BY rec.id;]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parameters" class="java.lang.String"/>
+	<field name="requirement" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="provided" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="das_ch" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="das_sr" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="measurement_plan_details_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="73" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="554" height="73" uuid="a9fdf626-fa21-45af-bddd-454111baaf18"/>
+			</rectangle>
+			<line>
+				<reportElement x="119" y="0" width="1" height="73" uuid="a33357e9-c2f9-42df-a044-f5f93e1cdbaf"/>
+			</line>
+			<line>
+				<reportElement x="201" y="0" width="1" height="73" uuid="f4928761-68c5-489f-912a-19351c0c634a"/>
+			</line>
+			<line>
+				<reportElement x="305" y="0" width="1" height="73" uuid="2b2b725f-8fa5-477f-9e1c-1d783f68ef73"/>
+			</line>
+			<line>
+				<reportElement x="45" y="0" width="1" height="73" uuid="43777694-97c7-44ac-8a15-7692f74a787c"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="23" width="44" height="20" uuid="4d0007bb-3165-465a-89b5-e46c505a1992"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SL.NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="25" width="73" height="20" uuid="a52fa26d-a2df-4d6e-9764-67415176ed5c"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[PARAMETERS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="25" width="81" height="20" uuid="8c202b1c-eae4-4372-891b-5f93d9a522fb"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[REQUIREMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="25" width="100" height="18" uuid="527fb8ef-a462-4e52-9e13-26008a255541"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[PROVIDED]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="5" width="246" height="20" uuid="294c2060-13c3-4ff6-a7f6-803ec07233d4"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[RECORDING SYSTEMS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="306" y="28" width="248" height="1" uuid="6a2f1273-8f2c-4f99-8ee1-96bfdab06996"/>
+			</line>
+			<line>
+				<reportElement x="306" y="52" width="248" height="1" uuid="c3492943-38fd-4394-81e9-038f6d791c5b"/>
+			</line>
+			<staticText>
+				<reportElement x="325" y="29" width="67" height="20" uuid="dfcdd5b0-0c79-4893-a62d-3a72b9b55ba8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DAS-1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="53" width="58" height="20" uuid="5dd618b5-9ba6-44c6-a239-cefdc22c797f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="53" width="31" height="20" uuid="89828302-73ca-42d2-a77d-b39cf7e73a50"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[S.R]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="126" y="11" width="75" height="20" uuid="0fde5a9f-efa3-4a7d-8539-d19966e9af54"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{requirement}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="46" y="11" width="73" height="20" uuid="d57d4216-307f-4fb9-8e6a-0ede64bf3eb3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{parameters}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="11" width="77" height="20" uuid="0183edd9-5332-4321-92cd-645d99c3857b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{provided}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="305" y="0" width="1" height="35" uuid="1052ca9e-88a5-4e2b-a726-b8fc7b23e5f8"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="35" uuid="75896a83-99dd-4d1f-8b92-be09dd16a4f5"/>
+			</line>
+			<line>
+				<reportElement x="554" y="0" width="1" height="35" uuid="c6e2c304-b8b8-4fad-b100-fa31e3789b48"/>
+			</line>
+			<line>
+				<reportElement x="119" y="0" width="1" height="35" uuid="f8e90348-b7f8-4270-8067-728d04e645d6"/>
+			</line>
+			<line>
+				<reportElement x="201" y="0" width="1" height="35" uuid="4b634d2f-ad01-4253-8bf5-5ac42b49e5a6"/>
+			</line>
+			<line>
+				<reportElement x="365" y="0" width="1" height="35" uuid="b1bf58f7-07f5-4630-bf57-f220de3a26aa"/>
+			</line>
+			<line>
+				<reportElement x="45" y="0" width="1" height="35" uuid="bb8ee836-b966-44fc-981e-fc2a859aae34"/>
+			</line>
+			<textField>
+				<reportElement x="1" y="11" width="44" height="20" uuid="25fa5415-32cb-41d9-8a02-9eac80507e31"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="308" y="11" width="57" height="20" uuid="57277f1b-8ec4-423d-89f0-f373c7b11a53"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{das_ch}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="366" y="11" width="54" height="20" uuid="950d97d7-93cc-4ad6-ba0a-efcda46e3794"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{das_sr}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="37" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="0" width="553" height="1" uuid="351171ab-8a3c-4900-acc0-94b62362813e"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

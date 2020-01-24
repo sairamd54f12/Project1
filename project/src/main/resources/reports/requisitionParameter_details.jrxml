@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="requisitionParameter_details" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="86488243-4f55-437a-bffc-450b68c0b6c0">
+	<property name="ireport.zoom" value="1.3310000000000073"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="testbatchId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+concat(tpd.bandwidth,' ',(select value from uom where id=tpd.bandwidth_uom_id)) bandwidth,
+concat(tpd.average,' ',(select value from uom where id=tpd.average_uom_id)) average,
+pm.parameter_name,
+concat(tpd.peak,' ',(select value from uom where id=tpd.peak_uom_id)) peak,
+
+concat(truncate(tb.burning_time,0),' ',(select value from uom where id=tb.burning_time_uom_id)) burning_time,
+concat(tpd.rise_time,' ',(select value from uom where id=tpd.rise_time_uom_id)) rise_time,y_port_required
+
+ from test_parameter_detail tpd,
+parameter_master pm , test_batch tb where
+tpd.parameter_master_id =pm.id and
+tb.id =tpd.test_batch_id and
+tpd.test_batch_id=$P{testbatchId}]]>
+	</queryString>
+	<field name="bandwidth" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="average" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parameter_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="peak" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="burning_time" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rise_time" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="y_port_required" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68">
+			<staticText>
+				<reportElement x="279" y="28" width="96" height="40" uuid="5b20cdfd-c5ce-44b1-892e-8680939fac10"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Frequency Bandwidth(Hz) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="28" width="70" height="40" uuid="2a69c87c-f1ee-4cc4-a41d-a5ee586b9ad5"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Recording Duration]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="28" width="153" height="20" uuid="94f52027-8e34-4548-8477-f0e55178d295"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[   Expected Values]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="28" width="74" height="40" uuid="414c1c80-595d-47a8-b6bc-c77e027cd5f7"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Parameters]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="48" width="79" height="20" uuid="ed9f2c64-f060-47e6-8d0f-db37f46e990b"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[                 Peak]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="0" width="170" height="13" uuid="f3ff0616-107c-4316-8336-1a5b2898d6bb"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[10. Details of measurement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="12" width="210" height="13" uuid="3a0e6ad2-021d-492e-b103-bd14b18ed86f"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(attach separate sheet, if required)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="28" width="47" height="40" uuid="31cfaeb9-07fd-4f13-894e-6709cb29e982"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Y Port Required]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="48" width="74" height="20" uuid="30ce1477-d947-44a6-9cd6-cc907e47ded9"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="28" width="86" height="40" uuid="85c7c77d-3af9-4d36-995d-a889137d6cb1"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Rise Time]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement x="5" y="19" width="526" height="1" uuid="e1241c68-1515-4212-9411-2323ea2a4137"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="375" y="0" width="86" height="18" uuid="09da6362-1bc8-45cf-9ba8-f22a846d4597"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="387" y="2" width="69" height="14" uuid="5f63390b-f297-4251-8225-81892c55fc01"/>
+				<textFieldExpression><![CDATA[$F{rise_time}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="0" width="96" height="18" uuid="cffabad7-5920-4619-a4ba-b146365d40a5"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="0" width="68" height="14" uuid="77ba3f60-4760-43f8-86c1-9e91f1ca502f"/>
+				<textFieldExpression><![CDATA[$F{bandwidth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="207" y="1" width="64" height="14" uuid="b0a770cd-53c6-456a-ab18-24188c3cd395"/>
+				<textFieldExpression><![CDATA[$F{average}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="1" width="36" height="14" uuid="fe16c415-c12d-4ead-b79f-efb33ce07940"/>
+				<textFieldExpression><![CDATA[$F{y_port_required}==true?"Yes":"No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="0" width="61" height="14" uuid="b712fa76-c938-44f7-8469-6ba1378a25d3"/>
+				<textFieldExpression><![CDATA[$F{parameter_name}==null?"Nil":$F{parameter_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="2" width="70" height="14" uuid="e8b47cd2-5a5f-4d86-a1b8-0a1a0ff79ad2"/>
+				<textFieldExpression><![CDATA[$F{rise_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="0" width="79" height="14" uuid="091a0ae3-cd09-47b8-b32d-84fd9127397e"/>
+				<textFieldExpression><![CDATA[$F{peak}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="126" y="0" width="79" height="18" uuid="96df4c62-865b-41da-9c61-760627c48b87"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="5" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<line>
+				<reportElement x="5" y="0" width="526" height="1" uuid="cd67d11b-ac87-43b6-950c-5f5f80dd1135"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="205" y="0" width="74" height="18" uuid="b5e89189-f742-4eb4-a734-191715ab85ff"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="0" width="74" height="18" uuid="ed71dc8c-6120-442d-a469-80f18c92f062"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="0" width="70" height="18" uuid="6079272c-26ad-4a14-b7f1-63a0a0d72a1b"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="0" width="47" height="18" uuid="e56d451a-202a-4657-9fbc-81a6b2e0d192"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band height="13">
+			<textField pattern="###0">
+				<reportElement x="131" y="0" width="63" height="13" uuid="9ba7f267-24da-4b94-b9a2-9d161c51e302"/>
+				<textFieldExpression><![CDATA[$F{burning_time}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="0" width="104" height="13" uuid="e0d16ce6-7918-4ce7-83ea-f0ff316a3bd4"/>
+				<text><![CDATA[Burn Time  :]]></text>
+			</staticText>
+		</band>
+	</summary>
+	<noData>
+		<band height="115">
+			<staticText>
+				<reportElement x="457" y="37" width="70" height="40" uuid="c51d91d0-6b07-48ff-9f31-c3b55a3eeb9d"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Recording Duration]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="37" width="86" height="40" uuid="8bd19945-e81e-4cab-a84b-8e5b23dd37ae"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Rise Time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="37" width="74" height="40" uuid="8a3fa874-90f3-4920-a543-86aed68277b9"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Parameters]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="57" width="79" height="20" uuid="42d6caab-580f-4cef-b2b7-d1043f862f1a"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[                 Peak]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="37" width="96" height="40" uuid="43ddc514-43e7-4ca1-af85-63942c9438e6"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Frequency Bandwidth(Hz) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="37" width="153" height="20" uuid="4249cd04-ad08-44da-8ccb-54a30d5a719e"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[   Expected Values]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="37" width="47" height="40" uuid="ee9f149b-5fa9-4ff7-bfa0-ed7c61392d2c"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Y Port Required]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="57" width="74" height="20" uuid="ab2665df-9715-44fb-aab9-a21790aae206"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-276" y="86" width="74" height="18" uuid="d375c809-e8da-4013-8091-bc494ad4ff25"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="0" width="189" height="13" uuid="54321689-874e-48e1-8b12-c4436d868984"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[10. Details of measurement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="12" width="190" height="13" uuid="767ff714-a179-4d0f-8926-367a6fb53c5a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[(attach separate sheet, if required)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="77" width="74" height="18" uuid="290cc709-46b8-46b1-8ada-aacac727487c"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="77" width="47" height="18" uuid="290cc709-46b8-46b1-8ada-aacac727487c"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="77" width="96" height="18" uuid="290cc709-46b8-46b1-8ada-aacac727487c"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="77" width="79" height="18" uuid="290cc709-46b8-46b1-8ada-aacac727487c"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="77" width="86" height="18" uuid="290cc709-46b8-46b1-8ada-aacac727487c"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="77" width="74" height="18" uuid="290cc709-46b8-46b1-8ada-aacac727487c"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="457" y="77" width="70" height="18" uuid="290cc709-46b8-46b1-8ada-aacac727487c"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="94" width="526" height="1" uuid="0ab52e68-e03c-4038-99cc-89b248e6dcb8"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="1" y="76" width="526" height="1" uuid="2541b595-a2b5-40e5-b1c6-5308f54e0ebb"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="3" y="97" width="100" height="13" uuid="d7b0ef03-9f10-4048-aab1-7451009b50db"/>
+				<text><![CDATA[Burn Time :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="96" width="100" height="13" uuid="7c047d0c-4733-46f4-915c-795f04223ad1"/>
+				<text><![CDATA[Nil]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

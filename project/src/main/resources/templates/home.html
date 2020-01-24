@@ -1,0 +1,55 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+ <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+
+   
+ 
+ <script src="js/angular.min.js"></script>
+ 
+<!--  <script src="js/angular-resource.min.js"></script>
+
+ -->
+  <script src="js/angular-ui-router.js"></script>
+ 
+ <script src=" https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.4.0/angular-resource.js
+   "></script>
+  <script src="controller/register.js"></script>
+</head>
+<body>
+<div ng-app="app" ng-controller="ss">
+<table>
+<tr><td></td><td><input type="text" ng-model="id"></td></tr>
+<tr><td>FirstName:</td><td><input type="text" ng-model="Fname"></td></tr>
+<tr><td>LastName:</td><td><input type="text" ng-model="Lname"></td></tr>
+<tr><td>email:</td><td><input type="email" ng-model="email"></td></tr>
+<tr><td>password:</td><td><input type="password" ng-model="password"></td></tr>
+<tr><td><input type="submit" ng-click="save(Fname,Lname,email,password)" value="save"></td></tr>
+<tr><td><input type="submit" ng-click="update(id,Fname,Lname,email,password)" value="update"></td></tr>
+</table>
+<div>
+<table class="ui inverted green table">
+<thead>
+<tr><th>s.no</th><th>FirstName</th><th>LastName</th><th>email</th><th>password</th><th>edit</th><th>delete</th></tr>
+</thead>
+<tbody>
+<tr ng-repeat="ur in userListt">
+<td>{{ur.id}}</td>
+<td>{{ur.firstName}}</td>
+<td>{{ur.lastName}}</td>
+<td>{{ur.email}}</td>
+<td>{{ur.password}}</td>
+<td><input type="submit" ng-click="edit(ur.id,ur.firstName,ur.lastName,ur.email,ur.password)" value="edit"></td>
+<td><input type="submit" ng-click="deletee(ur.id)" value="delete"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</body>
+</html>

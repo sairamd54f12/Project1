@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="testing-2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c157cf22-e226-48fe-8477-3d313695d87d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="New Dataset 1" uuid="cb5f9f3d-ac6c-42c7-be16-0a2303071ebb">
+		<queryString language="SQL">
+			<![CDATA[select
+ @rank:=@rank+1  AS r,
+
+t.tpd_pk1 ' tpd_pk',
+t.Parameter_Name1 'Parameter Name',
+t.EXP_value1 'EXP.value' ,
+t.Engg_Unit_1 'Engg.Unit(E/U)',
+t.SENSOR_SNO_1 'SENSOR S.NO',
+t.Module_Name_IA_NO 'Module Name-Sr.No./IA_NO',
+t.SC_DAQ_1 'SC/DAQ',
+t.Gain1 Gain,
+t.Filter_KHz_1 'Filter(KHz)',
+t.DAS_NAME_TYPE_1 'DAS NAME/TYPE',
+t.Ch_No_1 'Ch No.',
+t.SR1 SR,
+t.uv_1 value,
+t.Recording_1 'Recording'
+from
+(SELECT
+		tpd.tpds_id 'tpd_pk1',
+	   tpd.tpds_par_name 'Parameter_Name1',
+       tpd.peak 'EXP_value1',
+	   tpd.value 'Engg_Unit_1',
+       tdr.sensor_no 'SENSOR_SNO_1',
+       hm.model_name 'Module_Name_IA_NO',
+       ia.name 'SC_DAQ_1',
+       gm.gain_steps Gain1,
+       bm.bandwidth_steps as 'Filter_KHz_1',
+
+       sm.system_name 'DAS_NAME_TYPE_1',
+       tdr.adc_channel_no 'Ch_No_1',
+       rs.das_sr SR1,
+	   uu.value uv_1,
+        tpd.recording_duration 'Recording_1',
+       tpd.peak_uom_id 'tpd_uom_id' ,
+       tdr.test_details_id,
+       rs.das_index,
+       tpd.bandwidth 'band_width' ,
+       tpd.bandwidth_uom_id 'band_uom_id',
+       tpd.tpds_pmid 'tpd_pm_id',
+       tpd.tp_pmid 'tpd_pm_id1',
+       tpd.tpds_tbi 'tpd_tbid',
+       tpd.tp_tbid 'tpd_tp_tbid',
+       tpd.p_parameter_type 'parameter_type'
+
+
+FROM    ( SELECT * FROM (SELECT tpds.id 'tpds_id',
+                                         tpds.peak 'peak',
+                                         tpds.parameter_name 'tpds_par_name',
+                                         tpds.peak_uom_id ,
+                                         tpds.bandwidth,
+                                         tpds.bandwidth_uom_id,
+                                         tp.recording_duration ,
+                                         tpds.parameter_master_id 'tpds_pmid',
+                                         tp.parameter_master_id 'tp_pmid',
+                                         tpds.test_batch_id 'tpds_tbi',
+                                         tp.test_batch_id 'tp_tbid',
+                                         p.parameter_name 'p_parameter_type'
+                                  FROM   mar26.test_parameter_detail tpds
+                                  JOIN   test_parameter tp
+                                  JOIN   parameter_master p
+                                  ON     tpds.test_batch_id=tp.test_batch_id
+                                  AND    tpds.parameter_master_id=tp.parameter_master_id
+                                  AND    tp.parameter_master_id=p.id
+                                  where  tpds.test_batch_id=1576) tpdss
+                 LEFT JOIN uom u
+                 ON        tpdss.peak_uom_id=u.id) tpd
+
+                join test_details_readings tdr
+                join hardware_model hm
+                join ia_no_master ia
+                join gain_master gm
+                join bandwidth_master bm
+                join system_details_master sm
+                join recording_systems rs
+                join uom uu
+                on
+                tdr.test_parameter_detail_id=tpd.tpds_id
+                and
+				tdr.hardware_model_id=hm.id
+                and
+				tdr.ia_no_master_id=ia.id
+                and
+				tdr.gain_master_id=gm.id
+                and
+				tdr.system_details_master_id=sm.id
+                and
+				tdr.recording_systems_id=rs.id
+                and
+				rs.uom_id=uu.id
+                group by  tpd.tpds_par_name,sm.system_name,tdr.id) t
+
+                CROSS JOIN (SELECT @rank:= 0) r]]>
+		</queryString>
+		<field name="r" class="java.lang.Double"/>
+		<field name="tpd_pk" class="java.lang.Long"/>
+		<field name="Parameter Name" class="java.lang.String"/>
+		<field name="EXP.value" class="java.lang.Integer"/>
+		<field name="Engg.Unit(E/U)" class="java.lang.String"/>
+		<field name="SENSOR S.NO" class="java.lang.String"/>
+		<field name="Module Name-Sr.No./IA_NO" class="java.lang.String"/>
+		<field name="SC/DAQ" class="java.lang.String"/>
+		<field name="Gain" class="java.lang.Integer"/>
+		<field name="Filter(KHz)" class="java.lang.Long"/>
+		<field name="DAS NAME/TYPE" class="java.lang.String"/>
+		<field name="Ch No." class="java.lang.Integer"/>
+		<field name="SR" class="java.lang.Float"/>
+		<field name="value" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Recording" class="java.lang.Integer"/>
+		<group name="r">
+			<groupExpression><![CDATA[$F{r}]]></groupExpression>
+		</group>
+		<group name="Parameter Name">
+			<groupExpression><![CDATA[$F{Parameter Name}]]></groupExpression>
+		</group>
+		<group name="Engg.Unit(E/U)">
+			<groupExpression><![CDATA[$F{Engg.Unit(E/U)}]]></groupExpression>
+		</group>
+		<group name="SENSOR S.NO">
+			<groupExpression><![CDATA[$F{SENSOR S.NO}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="rowspan" uuid="f549c509-0a4e-44a2-81a5-c8ab49fbcac6">
+		<queryString language="SQL">
+			<![CDATA[select
+ @rank:=@rank+1  AS r,
+
+t.tpd_pk1 ' tpd_pk',
+t.Parameter_Name1 'Parameter Name',
+t.EXP_value1 'EXP.value' ,
+t.Engg_Unit_1 'Engg.Unit(E/U)',
+t.SENSOR_SNO_1 'SENSOR S.NO',
+t.Module_Name_IA_NO 'Module Name-Sr.No./IA_NO',
+t.SC_DAQ_1 'SC/DAQ',
+t.Gain1 Gain,
+t.Filter_KHz_1 'Filter(KHz)',
+t.DAS_NAME_TYPE_1 'DAS NAME/TYPE',
+t.Ch_No_1 'Ch No.',
+t.SR1 SR,
+t.uv_1 value,
+t.Recording_1 'Recording'
+from
+(SELECT
+		tpd.tpds_id 'tpd_pk1',
+	   tpd.tpds_par_name 'Parameter_Name1',
+       tpd.peak 'EXP_value1',
+	   tpd.value 'Engg_Unit_1',
+       tdr.sensor_no 'SENSOR_SNO_1',
+       hm.model_name 'Module_Name_IA_NO',
+       ia.name 'SC_DAQ_1',
+       gm.gain_steps Gain1,
+       bm.bandwidth_steps as 'Filter_KHz_1',
+
+       sm.system_name 'DAS_NAME_TYPE_1',
+       tdr.adc_channel_no 'Ch_No_1',
+       rs.das_sr SR1,
+	   uu.value uv_1,
+        tpd.recording_duration 'Recording_1',
+       tpd.peak_uom_id 'tpd_uom_id' ,
+       tdr.test_details_id,
+       rs.das_index,
+       tpd.bandwidth 'band_width' ,
+       tpd.bandwidth_uom_id 'band_uom_id',
+       tpd.tpds_pmid 'tpd_pm_id',
+       tpd.tp_pmid 'tpd_pm_id1',
+       tpd.tpds_tbi 'tpd_tbid',
+       tpd.tp_tbid 'tpd_tp_tbid',
+       tpd.p_parameter_type 'parameter_type'
+
+
+FROM    ( SELECT * FROM (SELECT tpds.id 'tpds_id',
+                                         tpds.peak 'peak',
+                                         tpds.parameter_name 'tpds_par_name',
+                                         tpds.peak_uom_id ,
+                                         tpds.bandwidth,
+                                         tpds.bandwidth_uom_id,
+                                         tp.recording_duration ,
+                                         tpds.parameter_master_id 'tpds_pmid',
+                                         tp.parameter_master_id 'tp_pmid',
+                                         tpds.test_batch_id 'tpds_tbi',
+                                         tp.test_batch_id 'tp_tbid',
+                                         p.parameter_name 'p_parameter_type'
+                                  FROM   mar26.test_parameter_detail tpds
+                                  JOIN   test_parameter tp
+                                  JOIN   parameter_master p
+                                  ON     tpds.test_batch_id=tp.test_batch_id
+                                  AND    tpds.parameter_master_id=tp.parameter_master_id
+                                  AND    tp.parameter_master_id=p.id
+                                  where  tpds.test_batch_id=1576) tpdss
+                 LEFT JOIN uom u
+                 ON        tpdss.peak_uom_id=u.id) tpd
+
+                join test_details_readings tdr
+                join hardware_model hm
+                join ia_no_master ia
+                join gain_master gm
+                join bandwidth_master bm
+                join system_details_master sm
+                join recording_systems rs
+                join uom uu
+                on
+                tdr.test_parameter_detail_id=tpd.tpds_id
+                and
+				tdr.hardware_model_id=hm.id
+                and
+				tdr.ia_no_master_id=ia.id
+                and
+				tdr.gain_master_id=gm.id
+                and
+				tdr.system_details_master_id=sm.id
+                and
+				tdr.recording_systems_id=rs.id
+                and
+				rs.uom_id=uu.id
+                group by  tpd.tpds_par_name,sm.system_name,tdr.id) t
+
+                CROSS JOIN (SELECT @rank:= 0) r]]>
+		</queryString>
+		<field name="r" class="java.lang.Double"/>
+		<field name="tpd_pk" class="java.lang.Long"/>
+		<field name="Parameter Name" class="java.lang.String"/>
+		<field name="EXP.value" class="java.lang.Integer"/>
+		<field name="Engg.Unit(E/U)" class="java.lang.String"/>
+		<field name="SENSOR S.NO" class="java.lang.String"/>
+		<group name="r">
+			<groupExpression><![CDATA[$F{r}]]></groupExpression>
+		</group>
+		<group name="Parameter Name">
+			<groupExpression><![CDATA[$F{Parameter Name}]]></groupExpression>
+		</group>
+		<group name="EXP.value">
+			<groupExpression><![CDATA[$F{EXP.value}]]></groupExpression>
+		</group>
+		<group name="Engg.Unit(E/U)">
+			<groupExpression><![CDATA[$F{Engg.Unit(E/U)}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString>
+		<![CDATA[select
+ @rank:=@rank+1  AS r,
+
+t.tpd_pk1 ' tpd_pk',
+t.Parameter_Name1 'Parameter Name',
+t.EXP_value1 'EXP.value' ,
+t.Engg_Unit_1 'Engg.Unit(E/U)',
+t.SENSOR_SNO_1 'SENSOR S.NO',
+t.Module_Name_IA_NO 'Module Name-Sr.No./IA_NO',
+t.SC_DAQ_1 'SC/DAQ',
+t.Gain1 Gain,
+t.Filter_KHz_1 'Filter(KHz)',
+t.DAS_NAME_TYPE_1 'DAS NAME/TYPE',
+t.Ch_No_1 'Ch No.',
+t.SR1 SR,
+t.uv_1 value,
+t.Recording_1 'Recording'
+from
+(SELECT
+		tpd.tpds_id 'tpd_pk1',
+	   tpd.tpds_par_name 'Parameter_Name1',
+       tpd.peak 'EXP_value1',
+	   tpd.value 'Engg_Unit_1',
+       tdr.sensor_no 'SENSOR_SNO_1',
+       hm.model_name 'Module_Name_IA_NO',
+       ia.name 'SC_DAQ_1',
+       gm.gain_steps Gain1,
+       bm.bandwidth_steps as 'Filter_KHz_1',
+
+       sm.system_name 'DAS_NAME_TYPE_1',
+       tdr.adc_channel_no 'Ch_No_1',
+       rs.das_sr SR1,
+	   uu.value uv_1,
+        tpd.recording_duration 'Recording_1',
+       tpd.peak_uom_id 'tpd_uom_id' ,
+       tdr.test_details_id,
+       rs.das_index,
+       tpd.bandwidth 'band_width' ,
+       tpd.bandwidth_uom_id 'band_uom_id',
+       tpd.tpds_pmid 'tpd_pm_id',
+       tpd.tp_pmid 'tpd_pm_id1',
+       tpd.tpds_tbi 'tpd_tbid',
+       tpd.tp_tbid 'tpd_tp_tbid',
+       tpd.p_parameter_type 'parameter_type'
+
+
+FROM    ( SELECT * FROM (SELECT tpds.id 'tpds_id',
+                                         tpds.peak 'peak',
+                                         tpds.parameter_name 'tpds_par_name',
+                                         tpds.peak_uom_id ,
+                                         tpds.bandwidth,
+                                         tpds.bandwidth_uom_id,
+                                         tp.recording_duration ,
+                                         tpds.parameter_master_id 'tpds_pmid',
+                                         tp.parameter_master_id 'tp_pmid',
+                                         tpds.test_batch_id 'tpds_tbi',
+                                         tp.test_batch_id 'tp_tbid',
+                                         p.parameter_name 'p_parameter_type'
+                                  FROM   mar26.test_parameter_detail tpds
+                                  JOIN   test_parameter tp
+                                  JOIN   parameter_master p
+                                  ON     tpds.test_batch_id=tp.test_batch_id
+                                  AND    tpds.parameter_master_id=tp.parameter_master_id
+                                  AND    tp.parameter_master_id=p.id
+                                  where  tpds.test_batch_id=1576) tpdss
+                 LEFT JOIN uom u
+                 ON        tpdss.peak_uom_id=u.id) tpd
+
+                join test_details_readings tdr
+                join hardware_model hm
+                join ia_no_master ia
+                join gain_master gm
+                join bandwidth_master bm
+                join system_details_master sm
+                join recording_systems rs
+                join uom uu
+                on
+                tdr.test_parameter_detail_id=tpd.tpds_id
+                and
+				tdr.hardware_model_id=hm.id
+                and
+				tdr.ia_no_master_id=ia.id
+                and
+				tdr.gain_master_id=gm.id
+                and
+				tdr.system_details_master_id=sm.id
+                and
+				tdr.recording_systems_id=rs.id
+                and
+				rs.uom_id=uu.id
+                group by  tpd.tpds_par_name,sm.system_name,tdr.id) t
+
+                CROSS JOIN (SELECT @rank:= 0) r]]>
+	</queryString>
+	<field name="r" class="java.lang.Double"/>
+	<field name="tpd_pk" class="java.lang.Long"/>
+	<field name="Parameter Name" class="java.lang.String"/>
+	<field name="EXP.value" class="java.lang.Integer"/>
+	<field name="Engg.Unit(E/U)" class="java.lang.String"/>
+	<field name="SENSOR S.NO" class="java.lang.String"/>
+	<field name="Module Name-Sr.No./IA_NO" class="java.lang.String"/>
+	<field name="SC/DAQ" class="java.lang.String"/>
+	<field name="Gain" class="java.lang.Integer"/>
+	<field name="Filter(KHz)" class="java.lang.Long"/>
+	<field name="DAS NAME/TYPE" class="java.lang.String"/>
+	<field name="Ch No." class="java.lang.Integer"/>
+	<field name="SR" class="java.lang.Float"/>
+	<field name="value" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Recording" class="java.lang.Integer"/>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<elementGroup>
+				<componentElement>
+					<reportElement key="table" x="0" y="1" width="26" height="32" uuid="0449026d-3c3c-4add-ace9-18598bb5287b"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="New Dataset 1" uuid="cf999be7-0cd0-45e7-a20e-12c6695e7e20">
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="46" uuid="18bbece0-88aa-4e88-852b-0359cb8b86e9">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="46" height="20" printWhenGroupChanges="Parameter Name" uuid="fb948deb-b467-42fc-8a4a-adc5b094a2ee"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{r}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="341731eb-8faa-4bcb-a8ce-df4ad00b372b">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="60" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Parameter Name" uuid="30cf7b27-305c-4a7d-9500-8ce2eebd9efd"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{tpd_pk}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="091f126e-be7d-4e66-bd70-5f5791cc457d">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="60" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Parameter Name" uuid="ced560d1-3043-4665-b7dc-2c6a26d5c3e7"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Parameter Name}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="45" uuid="28821108-c061-446f-88bf-679d2ba2a352">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="45" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Parameter Name" uuid="e98bf983-130f-470f-aa89-01a6176c8794"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{EXP.value}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="25" uuid="048c06f0-6dd7-4630-be0b-8e03cd6e59a9">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="25" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Parameter Name" uuid="ea50480d-cbc1-4723-93da-8068da77b9fd"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Engg.Unit(E/U)}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="24" uuid="1fbfa058-ce3b-47b2-a867-b2ace9b71d48">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="24" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="Parameter Name" uuid="acbb093d-9ad6-4746-a619-26939bf5796c"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{SENSOR S.NO}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="29" uuid="8e8c7417-b9b0-4fe1-93e2-b7e69afe4bc4">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="29" height="20" uuid="cc3d6b72-7e6d-4854-b65f-5230522b0211"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Module Name-Sr.No./IA_NO}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="31" uuid="0720a40b-2b69-46bf-af16-6b34f5b0b8fa">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="31" height="20" uuid="92c64e50-23d6-4526-be65-ac103bffde03"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{SC/DAQ}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="41" uuid="b48f92b9-a8c3-4891-8c5c-67e2e49c5d82">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="41" height="20" uuid="8bc42a1f-8063-41ce-b302-5c71cb1a94b5"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Gain}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="27" uuid="1e27edc6-b621-4742-9b43-4ff28c5895fd">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="27" height="20" uuid="e5aa0a78-7444-4172-8b82-0e05e4e1b6f3"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Filter(KHz)}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="61" uuid="16ff1cf3-8e91-4c0c-9a45-011bf18cf8a7">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="60" height="20" uuid="5cbf8ccc-9c7a-4a26-8af2-c9a4899d49fd"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{DAS NAME/TYPE}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="c82da2e4-d2ce-4a6a-b059-690a737b0d0b">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="60" height="20" uuid="f9d73bbb-0eff-423a-96e1-913ebceba0cf"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Ch No.}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="61" uuid="3c3271b1-daf9-456a-8cbb-8f3653946357">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="60" height="20" uuid="ae4fa726-ae80-4910-931d-7f7e049d317a"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{SR}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="61" uuid="7d7ff17e-c206-45c4-8176-0a6a93d1d1a1">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="60" height="20" uuid="12372fb8-deee-43fd-8912-c3be3a5bffea"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="18" uuid="113dac6c-e00d-47c9-8096-2bb8c30382bc">
+							<jr:columnHeader height="60" rowSpan="1"/>
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="18" height="20" uuid="dfdb13cb-a053-4893-abd3-6c0b43e972f4"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Recording}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</elementGroup>
+		</band>
+	</detail>
+</jasperReport>
